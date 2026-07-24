@@ -95,9 +95,10 @@ a{color:inherit}
 /* ---------- Projects ---------- */
 .proj-list{margin-top:4px}
 .proj{display:grid;grid-template-columns:3rem minmax(0,1fr) auto;gap:clamp(16px,3vw,48px);align-items:baseline;text-decoration:none;color:inherit;padding:clamp(22px,3vw,34px) clamp(10px,2vw,18px);border-bottom:1px solid var(--line);transition:background-color .25s ease}
-.proj:hover{background:var(--accent-soft)}
+a.proj:hover{background:var(--accent-soft)}
 .proj .num{font-family:var(--font-mono);font-size:.8rem;color:var(--faint);font-variant-numeric:tabular-nums;letter-spacing:.05em;transition:color .25s ease}
-.proj:hover .num{color:var(--accent)}
+a.proj:hover .num{color:var(--accent)}
+div.proj{cursor:default}
 .proj h3{font-size:clamp(1.4rem,2.7vw,2.05rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
 .proj .desc{margin-top:.6em;max-width:54ch;color:var(--muted);font-size:1rem;line-height:1.55}
 .proj .tags{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:right}
@@ -213,6 +214,13 @@ a{color:inherit}
           <img src="/splat-after.jpg" width="169" height="300" alt="The same room with the wall recolored sage" loading="lazy">
         </div>
       </a>
+      <div class="proj reveal">
+        <span class="num">03</span>
+        <div>
+          <h3>ATY Ltd</h3>
+          <p class="desc">Transferring controls over an asset management company to AI</p>
+        </div>
+      </div>
     </div>
   </section>
 
