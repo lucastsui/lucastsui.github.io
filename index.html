@@ -101,18 +101,15 @@ a{color:inherit}
 /* ---------- Projects ---------- */
 .proj-list{margin-top:4px}
 .proj{display:grid;grid-template-columns:3rem minmax(0,1fr) auto;gap:clamp(16px,3vw,48px);align-items:baseline;text-decoration:none;color:inherit;padding:clamp(22px,3vw,34px) clamp(10px,2vw,18px);border-bottom:1px solid var(--line);transition:background-color .25s ease}
-a.proj:hover,.proj.is-expandable:hover,.proj.is-expandable:focus-visible{background:var(--accent-soft)}
+a.proj:hover{background:var(--accent-soft)}
 .proj .num{font-family:var(--font-mono);font-size:.8rem;color:var(--faint);font-variant-numeric:tabular-nums;letter-spacing:.05em;transition:color .25s ease}
-a.proj:hover .num,.proj.is-expandable:hover .num{color:var(--accent)}
+a.proj:hover .num{color:var(--accent)}
 div.proj{cursor:default}
-.proj.is-expandable{cursor:pointer;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;font:inherit;text-align:left}
 .proj h3{font-size:clamp(1.4rem,2.7vw,2.05rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
-.proj .desc{margin-top:.6em;max-width:54ch;color:var(--muted);font-size:1rem;line-height:1.55}
-.proj .proj-more{display:none;margin-top:.85em;max-width:58ch;color:var(--muted);font-size:.98rem;line-height:1.55}
-.proj.is-open .proj-more{display:block}
-.proj .proj-more p+p{margin-top:.75em}
-.proj .proj-more a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;word-break:break-word}
-.proj .proj-more a:hover{color:var(--accent)}
+.proj .desc{margin-top:.6em;max-width:58ch;color:var(--muted);font-size:1rem;line-height:1.55}
+.proj .desc+.desc{margin-top:.75em}
+.proj .desc a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;word-break:break-word}
+.proj .desc a:hover{color:var(--accent)}
 .proj .tags{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:right}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-thumb{border-color:var(--accent)}
@@ -244,18 +241,16 @@ div.proj{cursor:default}
     </div>
 
     <div class="proj-list">
-      <button type="button" class="proj is-expandable reveal" aria-expanded="false" id="proj-self-improving-factory">
+      <div class="proj reveal" id="proj-self-improving-factory">
         <span class="num">01</span>
         <div>
           <h3>Self Improving Factory</h3>
           <p class="desc">I make self-expanding and self-improving simulated factories.</p>
-          <div class="proj-more">
-            <p>Approach one is to encode design knowledge into the architecture so that the factory can scale indefinitely without exploding in complexity. The results are in <a href="https://github.com/lucastsui/RINA-Recursive-Factory" target="_blank" rel="noopener">github.com/lucastsui/RINA-Recursive-Factory</a>.</p>
-            <p>Approach two is to use AI to explore the world and research optimizations autonomously. The project is ongoing. The scale of the project is such that there are around 120 types of intermediate products, around 1M moving intermediate products on average. Current layout of the factory: <a href="https://claude.ai/code/artifact/31ded7f0-a54f-4c12-9627-ff794e5c9f97?org=78cee566-b0ef-4e05-b28b-ced933b39a88" target="_blank" rel="noopener">claude.ai layout artifact</a>.</p>
-          </div>
+          <p class="desc">Approach one is to encode design knowledge into the architecture so that the factory can scale indefinitely without exploding in complexity. The results are in <a href="https://github.com/lucastsui/RINA-Recursive-Factory" target="_blank" rel="noopener">github.com/lucastsui/RINA-Recursive-Factory</a>.</p>
+          <p class="desc">Approach two is to use AI to explore the world and research optimizations autonomously. The project is ongoing. The scale of the project is such that there are around 120 types of intermediate products, around 1M moving intermediate products on average. Current layout of the factory: <a href="https://claude.ai/code/artifact/31ded7f0-a54f-4c12-9627-ff794e5c9f97?org=78cee566-b0ef-4e05-b28b-ced933b39a88" target="_blank" rel="noopener">claude.ai layout artifact</a>.</p>
         </div>
         <img class="proj-thumb" src="/self-improving-factory.png" width="2606" height="1628" alt="Self Improving Factory layout snapshot" loading="lazy">
-      </button>
+      </div>
       <a class="proj reveal" href="https://github.com/lucastsui/bjork-cube" target="_blank" rel="noopener" aria-label="Björk Cube, open GitHub repository">
         <span class="num">02</span>
         <div>
@@ -336,14 +331,6 @@ div.proj{cursor:default}
     items.forEach(function(el){io.observe(el);});
   }
 
-  // Expandable project rows
-  document.querySelectorAll('.proj.is-expandable').forEach(function(btn){
-    btn.addEventListener('click',function(e){
-      if(e.target.closest('a')) return;
-      var open=btn.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open?'true':'false');
-    });
-  });
 })();
 </script>
 </body>
