@@ -101,12 +101,17 @@ a{color:inherit}
 /* ---------- Projects ---------- */
 .proj-list{margin-top:4px}
 .proj{display:grid;grid-template-columns:3rem minmax(0,1fr) auto;gap:clamp(16px,3vw,48px);align-items:baseline;text-decoration:none;color:inherit;padding:clamp(22px,3vw,34px) clamp(10px,2vw,18px);border-bottom:1px solid var(--line);transition:background-color .25s ease}
-a.proj:hover{background:var(--accent-soft)}
+a.proj:hover,.proj.is-expandable:hover,.proj.is-expandable:focus-visible{background:var(--accent-soft)}
 .proj .num{font-family:var(--font-mono);font-size:.8rem;color:var(--faint);font-variant-numeric:tabular-nums;letter-spacing:.05em;transition:color .25s ease}
-a.proj:hover .num{color:var(--accent)}
+a.proj:hover .num,.proj.is-expandable:hover .num{color:var(--accent)}
 div.proj{cursor:default}
+.proj.is-expandable{cursor:pointer;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;font:inherit;text-align:left}
 .proj h3{font-size:clamp(1.4rem,2.7vw,2.05rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
 .proj .desc{margin-top:.6em;max-width:54ch;color:var(--muted);font-size:1rem;line-height:1.55}
+.proj .proj-more{display:none;margin-top:.85em;max-width:58ch;color:var(--muted);font-size:.98rem;line-height:1.55}
+.proj.is-open .proj-more{display:block}
+.proj .proj-more a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.proj .proj-more a:hover{color:var(--accent)}
 .proj .tags{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:right}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-thumb{border-color:var(--accent)}
@@ -238,8 +243,18 @@ div.proj{cursor:default}
     </div>
 
     <div class="proj-list">
-      <a class="proj reveal" href="https://github.com/lucastsui/bjork-cube" target="_blank" rel="noopener" aria-label="Björk Cube, open GitHub repository">
+      <button type="button" class="proj is-expandable reveal" aria-expanded="false" id="proj-self-improving-factory">
         <span class="num">01</span>
+        <div>
+          <h3>Self Improving Factory</h3>
+          <p class="desc">Use AI to autonomously figure out the rules of the world and design factory layout to satisfy production goals.</p>
+          <div class="proj-more">
+            <p>First I try to adopt an architecture design that enables indefinite scaling, the results are in <a href="https://github.com/lucastsui/RINA-Recursive-Factory" target="_blank" rel="noopener">github.com/lucastsui/RINA-Recursive-Factory</a>. The ongoing phase now is to have the AI zero-shot the layout as it figures out the optimizations itself.</p>
+          </div>
+        </div>
+      </button>
+      <a class="proj reveal" href="https://github.com/lucastsui/bjork-cube" target="_blank" rel="noopener" aria-label="Björk Cube, open GitHub repository">
+        <span class="num">02</span>
         <div>
           <h3>Björk Cube</h3>
           <p class="desc">A hackathon experiment to use social media methods to understand the internal space of Magenta RealTime 2, a music generation model created by Google.</p>
@@ -247,7 +262,7 @@ div.proj{cursor:default}
         <img class="proj-thumb" src="/bjork-cube.jpg" width="600" height="388" alt="The Björk Cube app, a navigable hypercube of Magenta RealTime 2's style space" loading="lazy">
       </a>
       <a class="proj reveal" href="https://github.com/lucastsui/splat-room-edit" target="_blank" rel="noopener" aria-label="Splat Room-Edit, open GitHub repository">
-        <span class="num">02</span>
+        <span class="num">03</span>
         <div>
           <h3>Splat Room-Edit</h3>
           <p class="desc">An experiment that turns a 20-second phone video of a room into a 3D Gaussian splat you can walk through in a browser, then recolors just the wall with one command while the art and furniture stay untouched.</p>
@@ -258,14 +273,14 @@ div.proj{cursor:default}
         </div>
       </a>
       <div class="proj reveal">
-        <span class="num">03</span>
+        <span class="num">04</span>
         <div>
           <h3>AYQ Ltd</h3>
           <p class="desc">Transferring control of my asset management company to AI.</p>
         </div>
       </div>
       <div class="proj reveal">
-        <span class="num">04</span>
+        <span class="num">05</span>
         <div>
           <h3>Carruthers</h3>
           <p class="desc">Research the structure of the exosphere, the outermost layer of the Earth's atmosphere, through data sent by the Carruthers satellite.</p>
@@ -317,6 +332,15 @@ div.proj{cursor:default}
     },{rootMargin:'0px 0px -8% 0px',threshold:.08});
     items.forEach(function(el){io.observe(el);});
   }
+
+  // Expandable project rows
+  document.querySelectorAll('.proj.is-expandable').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      if(e.target.closest('a')) return;
+      var open=btn.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open?'true':'false');
+    });
+  });
 })();
 </script>
 </body>
