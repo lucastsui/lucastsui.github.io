@@ -87,7 +87,8 @@ a{color:inherit}
 .cell .v{margin-top:.4em;font-size:.98rem;color:var(--ink)}
 
 /* ---------- Sections ---------- */
-.section{padding-block:clamp(56px,9vh,108px)}
+.section{padding-block:clamp(32px,5vh,56px)}
+.section + .section{padding-top:clamp(12px,2vh,24px)}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:22px;border-bottom:1px solid var(--line-strong)}
 .sec-head .sec-lead{margin-top:.75em;font-size:clamp(1.1rem,1.7vw,1.4rem);color:var(--ink);max-width:34ch;letter-spacing:-.01em}
 .sec-count{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.1em;color:var(--faint);font-variant-numeric:tabular-nums;white-space:nowrap}
