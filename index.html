@@ -58,10 +58,14 @@ a{color:inherit}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:15px}
 .wordmark{display:inline-flex;align-items:center;gap:.6em;font-weight:700;font-size:1.02rem;letter-spacing:-.01em;text-decoration:none}
 .wordmark::before{content:"";width:9px;height:9px;background:var(--accent);display:inline-block}
-.nav-right{display:flex;align-items:center;gap:clamp(16px,2.4vw,30px)}
+.nav-right{display:flex;align-items:center;gap:clamp(12px,2vw,24px)}
 .nav-links{display:flex;gap:clamp(16px,2.4vw,30px)}
 .nav-links a{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s ease}
 .nav-links a:hover{color:var(--ink)}
+.nav-icons{display:flex;align-items:center;gap:4px}
+.nav-icons a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;color:var(--muted);text-decoration:none;transition:color .2s ease}
+.nav-icons a:hover{color:var(--ink)}
+.nav-icons svg{width:18px;height:18px;display:block;fill:currentColor}
 .theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .2s ease,color .2s ease}
 .theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
 .theme-toggle .mark{width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 0 50%,transparent 50% 100%)}
@@ -130,11 +134,6 @@ div.proj{cursor:default}
 @media (max-width:640px){
   .about-systems li{grid-template-columns:1fr;gap:.1em}
 }
-.contact{margin-top:2rem;display:flex;gap:26px;flex-wrap:wrap}
-.contact a{position:relative;font-family:var(--font-mono);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-bottom:4px}
-.contact a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--line-strong);transition:background-color .25s ease}
-.contact a:hover{color:var(--accent)}
-.contact a:hover::after{background:var(--accent)}
 .skills-head{margin-bottom:6px}
 .skills{display:flex;flex-direction:column}
 .skill{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:.72em 0;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
@@ -161,6 +160,7 @@ div.proj{cursor:default}
 }
 @media (max-width:640px){
   .nav-links{display:none}
+  .nav-icons{display:flex}
   .meta-strip{grid-template-columns:1fr}
   .cell+.cell{border-left:none;border-top:1px solid var(--line);padding-left:0}
   .sec-head{flex-direction:column;align-items:flex-start;gap:10px}
@@ -186,8 +186,15 @@ div.proj{cursor:default}
       <nav class="nav-links" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
       </nav>
+      <div class="nav-icons" aria-label="Contact">
+        <a href="mailto:lucas.r.tsui@gmail.com" aria-label="Email Lucas Tsui">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/lucas-tsui-30a96251/" target="_blank" rel="noopener" aria-label="Lucas Tsui on LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
+        </a>
+      </div>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light or dark theme" aria-pressed="false">
         <span class="mark" aria-hidden="true"></span>
       </button>
@@ -264,19 +271,6 @@ div.proj{cursor:default}
           <p class="desc">Research the structure of the exosphere, the outermost layer of the Earth's atmosphere, through data sent by the Carruthers satellite.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="section wrap" id="contact" aria-labelledby="contact-h">
-    <div class="sec-head reveal">
-      <div>
-        <h2 class="kicker" id="contact-h">Contact</h2>
-      </div>
-    </div>
-
-    <div class="contact reveal">
-      <a href="mailto:lucas.r.tsui@gmail.com">lucas.r.tsui@gmail.com</a>
-      <a href="https://www.linkedin.com/in/lucas-tsui-30a96251/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </section>
 </main>
