@@ -118,12 +118,16 @@ div.proj{cursor:default}
 .status .note{margin-top:.9em;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;color:var(--muted);line-height:1.6}
 
 /* ---------- About ---------- */
-.about-grid{margin-top:clamp(28px,4vw,48px);display:grid;grid-template-columns:1.45fr 1fr;gap:clamp(32px,5vw,80px);align-items:start}
-.about-text p{color:var(--muted);font-size:1.06rem;line-height:1.65;max-width:56ch}
-.about-text p+p{margin-top:1.1em}
-.about-text ul{margin-top:1.1em;max-width:56ch;padding-left:1.25em;color:var(--muted);font-size:1.06rem;line-height:1.65}
-.about-text li+li{margin-top:.55em}
-.about-text li strong{color:var(--ink);font-weight:600}
+.about-text{margin-top:16px;max-width:62ch}
+.about-text p{color:var(--muted);font-size:1.02rem;line-height:1.5;font-weight:400}
+.about-text .lead-in{margin-top:.65em;color:var(--faint);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+.about-systems{margin-top:.55em;display:grid;gap:.4em;padding:0;list-style:none}
+.about-systems li{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.35em 1rem;align-items:baseline;font-size:1.02rem;line-height:1.45;font-weight:400}
+.about-systems .label{color:var(--ink);font-weight:400}
+.about-systems .desc{color:var(--muted);font-weight:400}
+@media (max-width:640px){
+  .about-systems li{grid-template-columns:1fr;gap:.1em}
+}
 .contact{margin-top:2rem;display:flex;gap:26px;flex-wrap:wrap}
 .contact a{position:relative;font-family:var(--font-mono);font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;padding-bottom:4px}
 .contact a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--line-strong);transition:background-color .25s ease}
@@ -150,7 +154,7 @@ div.proj{cursor:default}
 
 /* ---------- Responsive ---------- */
 @media (max-width:820px){
-  .exp,.about-grid{grid-template-columns:1fr}
+  .exp{grid-template-columns:1fr}
   .status{border-top-width:1px;border-top-color:var(--line-strong)}
 }
 @media (max-width:640px){
@@ -199,11 +203,20 @@ div.proj{cursor:default}
 
     <div class="about-text reveal">
       <p>I built systems that overcome their own architectural limitations. I am now automating this process through AI.</p>
-      <p>These systems include:</p>
-      <ul>
-        <li><strong>Financial system:</strong> I am transforming a real estate management company into portfolio management company using in-house AI to automate the decision making process.</li>
-        <li><strong>Physical theory:</strong> I am improving a theoretical model on the Earth's outer atmosphere.</li>
-        <li><strong>Factories:</strong> I am experimenting on using AI to automate end-to-end factory design and deployment.</li>
+      <p class="lead-in">These systems include</p>
+      <ul class="about-systems">
+        <li>
+          <span class="label">Financial system</span>
+          <span class="desc">I am transforming a real estate management company into portfolio management company using in-house AI to automate the decision making process.</span>
+        </li>
+        <li>
+          <span class="label">Physical theory</span>
+          <span class="desc">I am improving a theoretical model on the Earth's outer atmosphere.</span>
+        </li>
+        <li>
+          <span class="label">Factories</span>
+          <span class="desc">I am experimenting on using AI to automate end-to-end factory design and deployment.</span>
+        </li>
       </ul>
     </div>
   </section>
