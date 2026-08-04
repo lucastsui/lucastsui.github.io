@@ -128,15 +128,12 @@ div.proj{cursor:default}
 
 /* ---------- About ---------- */
 .about-text{margin-top:12px;max-width:62ch}
-.about-text p{color:var(--muted);font-size:1.02rem;line-height:1.5;font-weight:400}
-.about-text .lead-in{margin-top:.65em}
-.about-systems{margin-top:.55em;display:grid;gap:.4em;padding:0;list-style:none}
-.about-systems li{display:grid;grid-template-columns:10.5rem minmax(0,1fr);gap:.35em 1rem;align-items:baseline;font-size:1.02rem;line-height:1.45;font-weight:400}
-.about-systems .label{color:var(--ink);font-weight:400}
-.about-systems .desc{color:var(--muted);font-weight:400}
-@media (max-width:640px){
-  .about-systems li{grid-template-columns:1fr;gap:.1em}
-}
+.about-block{margin-top:1.35em}
+.about-block:first-child{margin-top:.75em}
+.about-block h3{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.4}
+.about-list{margin-top:.55em;padding:0;list-style:none;display:grid;gap:.45em}
+.about-list li{position:relative;padding-left:1.05em;color:var(--muted);font-size:1.02rem;line-height:1.5;font-weight:400}
+.about-list li::before{content:"–";position:absolute;left:0;color:var(--faint)}
 .skills-head{margin-bottom:6px}
 .skills{display:flex;flex-direction:column}
 .skill{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:.72em 0;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
@@ -214,26 +211,34 @@ div.proj{cursor:default}
     </div>
 
     <div class="about-text reveal">
-      <p>I built systems that overcome their own architectural limitations. I am now automating this process through AI.</p>
-      <p class="lead-in">These systems include</p>
-      <ul class="about-systems">
-        <li>
-          <span class="label">Financial system</span>
-          <span class="desc">I am transforming a real estate management company into portfolio management company using in-house AI to automate the decision making process.</span>
-        </li>
-        <li>
-          <span class="label">Physical theory</span>
-          <span class="desc">I am improving a theoretical model on the Earth's outer atmosphere.</span>
-        </li>
-        <li>
-          <span class="label">Factories</span>
-          <span class="desc">I am experimenting on using AI to automate end-to-end factory design and deployment.</span>
-        </li>
-        <li>
-          <span class="label">Collatz conjecture</span>
-          <span class="desc">I am running an autonomous AI research loop that systematically probes the Collatz conjecture, maps its structural barriers, and searches for the mathematical framework existing tools cannot supply.</span>
-        </li>
-      </ul>
+      <div class="about-block">
+        <h3>What I do now</h3>
+        <ul class="about-list">
+          <li>Master student of computer science in Boston University.</li>
+          <li>Research assistant in NASA's Carruthers project in modeling the exosphere using new observational data.</li>
+          <li>Founder of AYQ</li>
+        </ul>
+      </div>
+      <div class="about-block">
+        <h3>What I am looking for</h3>
+        <ul class="about-list">
+          <li>PHD and startup opportunities.</li>
+        </ul>
+      </div>
+      <div class="about-block">
+        <h3>What I offer</h3>
+        <ul class="about-list">
+          <li>Diverse educational background tested on the field. I hold degrees in physics and law. Now I am a master student in computer science at Boston University with concentration in artificial intelligence.</li>
+          <li>A mind that solves problem in a messy environment. I founded AYQ, a company that applies data science in real estate industry in Scotland, where signals come from physical environment, siloed domain specific knowledge, and noisy market data.</li>
+        </ul>
+      </div>
+      <div class="about-block">
+        <h3>My interests</h3>
+        <ul class="about-list">
+          <li>How do humans and AIs form a larger system that achieve what neither can individually?</li>
+          <li>Given a problem domain, should domain knowledge be learnt or encoded to model architecture?</li>
+        </ul>
+      </div>
     </div>
   </section>
 
