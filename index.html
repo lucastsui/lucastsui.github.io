@@ -108,8 +108,8 @@ div.proj{cursor:default}
 .proj h3{font-size:clamp(1.4rem,2.7vw,2.05rem);font-weight:600;letter-spacing:-.02em;line-height:1.1}
 .proj .desc{margin-top:.6em;max-width:58ch;color:var(--muted);font-size:1rem;line-height:1.55}
 .proj .desc+.desc{margin-top:.75em}
-.proj .desc a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;word-break:break-word}
-.proj .desc a:hover{color:var(--accent)}
+.proj .desc a,.proj .desc .proj-link{color:var(--ink);text-decoration:underline;text-underline-offset:3px;word-break:break-word}
+.proj .desc a:hover,.proj:hover .desc .proj-link{color:var(--accent)}
 .proj .tags{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:right}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-thumb{border-color:var(--accent)}
@@ -293,6 +293,14 @@ div.proj{cursor:default}
         <div class="proj-duo">
           <img src="/splat-before.jpg" width="169" height="300" alt="The captured room with a white wall" loading="lazy">
           <img src="/splat-after.jpg" width="169" height="300" alt="The same room with the wall recolored sage" loading="lazy">
+        </div>
+      </a>
+      <a class="proj reveal" href="https://github.com/lucastsui/collatz-research" target="_blank" rel="noopener" aria-label="Collatz Conjecture Research, open GitHub repository">
+        <span class="num">06</span>
+        <div>
+          <h3>Collatz Conjecture Research</h3>
+          <p class="desc">An autonomous AI research loop that systematically attacks the Collatz conjecture: predict before computing, hunt for surprises, adversarially attack emerging patterns, and ban approaches that circle known dead ends.</p>
+          <p class="desc">The working conclusion is structural rather than technical: existing tools either hit the abc barrier or restate the conjecture without reducing it, so the real goal is inventing a mathematical framework that can see structure invisible to prior methods. Code, maps, and session notes are in <span class="proj-link">github.com/lucastsui/collatz-research</span>.</p>
         </div>
       </a>
     </div>
