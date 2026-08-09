@@ -127,19 +127,53 @@ div.proj{cursor:default}
 .status .v{margin-top:.5em;font-size:1.05rem;color:var(--ink)}
 .status .note{margin-top:.9em;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;color:var(--muted);line-height:1.6}
 
-/* ---------- About ---------- */
-.about-text{margin-top:8px;max-width:none;width:100%}
-.about-block{margin-top:.7em}
-.about-block:first-child{margin-top:.35em}
-.about-block h3{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1.25}
-.about-list{margin-top:.25em;padding:0;list-style:none;display:grid;gap:.15em}
-.about-list li{position:relative;padding-left:1.05em;color:var(--muted);font-size:1.02rem;line-height:1.35;font-weight:400}
-.about-list li::before{content:"–";position:absolute;left:0;color:var(--faint)}
-.skills-head{margin-bottom:6px}
-.skills{display:flex;flex-direction:column}
-.skill{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:.72em 0;border-top:1px solid var(--line);font-family:var(--font-mono);font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.skill:last-child{border-bottom:1px solid var(--line)}
-.skill .idx{color:var(--faint);font-variant-numeric:tabular-nums}
+/* ---------- About (thavlik-style stacked intro) ---------- */
+.about-intro{
+  margin-top:clamp(12px,2vw,20px);
+  max-width:52rem;
+  display:flex;
+  flex-direction:column;
+  gap:clamp(14px,2vw,20px);
+}
+.about-tagline{
+  margin:0;
+  font-size:clamp(1.05rem,1.6vw,1.25rem);
+  font-weight:600;
+  letter-spacing:-.015em;
+  line-height:1.45;
+  color:var(--ink);
+}
+.about-body{
+  margin:0;
+  font-size:clamp(1rem,1.35vw,1.12rem);
+  line-height:1.6;
+  color:var(--muted);
+  max-width:48rem;
+}
+.about-teaser{
+  margin:0;
+  font-size:clamp(1rem,1.35vw,1.12rem);
+  line-height:1.55;
+  color:var(--ink);
+}
+.about-meta{
+  margin:0;
+  font-family:var(--font-mono);
+  font-size:.9rem;
+  line-height:1.7;
+  color:var(--muted);
+}
+.about-meta .about-mail{
+  color:var(--ink);
+  font-weight:600;
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease,color .2s ease;
+}
+.about-meta .about-mail:hover{
+  color:var(--accent);
+  border-bottom-color:var(--accent);
+}
 
 /* ---------- Footer ---------- */
 .site-foot{border-top:1px solid var(--line-strong);padding-block:clamp(34px,5vw,56px) clamp(26px,4vw,40px);display:flex;justify-content:space-between;gap:24px 40px;flex-wrap:wrap}
@@ -211,35 +245,11 @@ div.proj{cursor:default}
       </div>
     </div>
 
-    <div class="about-text reveal">
-      <div class="about-block">
-        <h3>What I do now</h3>
-        <ul class="about-list">
-          <li>Master's student in computer science at Boston University.</li>
-          <li>Research assistant on NASA's Carruthers project, modeling the exosphere using new observational data.</li>
-          <li>Founder of AYQ, an asset management company.</li>
-        </ul>
-      </div>
-      <div class="about-block">
-        <h3>What I am looking for</h3>
-        <ul class="about-list">
-          <li>PhD and startup opportunities.</li>
-        </ul>
-      </div>
-      <div class="about-block">
-        <h3>What I offer</h3>
-        <ul class="about-list">
-          <li>A mind that solves problems in a messy environment: I founded AYQ, a company that applies data science in the real estate industry in Scotland, where signals come from the physical environment, siloed domain-specific knowledge, and noisy market data.</li>
-          <li>Diverse educational background: a degree in physics from City University of Hong Kong, a degree in law from University of London.</li>
-        </ul>
-      </div>
-      <div class="about-block">
-        <h3>My interests</h3>
-        <ul class="about-list">
-          <li>How do humans and AIs form a larger system that achieves what neither can individually?</li>
-          <li>Given a problem domain, should domain knowledge be learned or encoded into model architecture like AlphaFold? Is there a general theory behind?</li>
-        </ul>
-      </div>
+    <div class="about-intro reveal">
+      <p class="about-tagline">Physics &amp; law graduate | Founder of a data analysis company | Master in Computer Science Candidate</p>
+      <p class="about-body">Interested in: self-improving systems, machine &amp; human learning, distributive systems, emergent phenomena, philosophy of intelligence</p>
+      <p class="about-teaser">Looking for PhD, startups, and interesting projects.</p>
+      <p class="about-meta">Wants to collab? Let's talk at <a class="about-mail" href="mailto:lucas.r.tsui@gmail.com">lucas.r.tsui [at] gmail [dot] com</a></p>
     </div>
   </section>
 
