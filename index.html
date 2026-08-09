@@ -113,39 +113,6 @@ div.proj{cursor:default}
 .proj .tags{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:right}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-thumb{border-color:var(--accent)}
-.proj-thumb-ascii{
-  width:clamp(170px,22vw,230px);
-  height:clamp(210px,28vw,290px);
-  align-self:start;
-  border:1px solid var(--line);
-  background:var(--bg);
-  overflow:hidden;
-  position:relative;
-  transition:border-color .25s ease;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.proj:hover .proj-thumb-ascii{border-color:var(--accent)}
-.proj-thumb-ascii pre{
-  margin:0;
-  font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
-  font-size:clamp(4.4px,0.58vw,5.8px);
-  line-height:1.05;
-  letter-spacing:0;
-  white-space:pre;
-  color:var(--muted);
-  user-select:none;
-  pointer-events:none;
-}
-.proj-thumb-ascii .ascii-fallback{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-}
-.proj-thumb-ascii.is-fallback pre{display:none}
-.proj-thumb-ascii.is-fallback .ascii-fallback{display:block}
 .proj-duo{display:flex;gap:6px;align-self:start}
 .proj-duo img{height:clamp(116px,15vw,136px);width:auto;display:block;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-duo img{border-color:var(--accent)}
@@ -200,7 +167,6 @@ div.proj{cursor:default}
   .proj{grid-template-columns:2.2rem minmax(0,1fr)}
   .proj .tags{grid-column:1/-1;text-align:left;margin-top:.7em}
   .proj-thumb{grid-column:1/-1;width:clamp(180px,55vw,260px);margin-top:.9em}
-  .proj-thumb-ascii{grid-column:1/-1;width:clamp(180px,55vw,260px);height:clamp(230px,62vw,310px);margin-top:.9em}
   .proj-duo{grid-column:1/-1;margin-top:.9em}
 }
 
@@ -342,10 +308,7 @@ div.proj{cursor:default}
           <h3>Socrates</h3>
           <p class="desc">This is an application to accelerate learning compared to passive lectures and brute-force recall practice by implementing pedagogic theories such as ZPD-based question targeting, cognitive load theory, the Socratic method, and related ideas. It progressively trains a student's knowledge-recall capability by tracking their mastery of a subject and asking questions appropriate for their level of understanding. A knowledge graph is generated dynamically to trace the background knowledge necessary to master a concept. <span class="proj-link">github.com/lucastsui/socrates</span></p>
         </div>
-        <div class="proj-thumb-ascii" id="socratesAsciiBust" aria-label="ASCII Socrates bust; head tracks cursor" role="img">
-          <pre id="socratesAsciiPre" aria-hidden="true"></pre>
-          <img class="ascii-fallback" src="/socrates-ascii.png" width="768" height="600" alt="ASCII portrait of Socrates" loading="lazy">
-        </div>
+        <img class="proj-thumb" src="/socrates-ascii.png" width="768" height="600" alt="ASCII portrait of Socrates" loading="lazy">
       </a>
     </div>
   </section>
@@ -396,15 +359,6 @@ div.proj{cursor:default}
 
 })();
 </script>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-<script type="module" src="/socrates-ascii-bust.js"></script>
 </body>
 </html>
 
