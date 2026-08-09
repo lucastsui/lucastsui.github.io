@@ -135,6 +135,20 @@ div.proj{cursor:default}
   text-align:center;
 }
 #about .sec-head > div{width:100%}
+/* One typeface for the whole About block (body sans) */
+#about,
+#about .kicker,
+#about .about-intro,
+#about .about-tagline,
+#about .about-body,
+#about .about-teaser,
+#about .about-meta,
+#about .about-mail{
+  font-family:var(--font-sans);
+}
+#about .kicker{
+  letter-spacing:.14em;
+}
 .about-intro{
   margin-top:clamp(12px,2vw,20px);
   max-width:52rem;
@@ -153,35 +167,41 @@ div.proj{cursor:default}
 }
 .about-tagline{
   margin:0;
-  font-size:clamp(1.05rem,1.6vw,1.25rem);
+  font-size:clamp(1.05rem,1.5vw,1.2rem);
   font-weight:600;
   letter-spacing:-.015em;
-  line-height:1.45;
+  line-height:1.5;
   color:var(--ink);
 }
 .about-body{
   margin:0;
-  font-size:clamp(1rem,1.35vw,1.12rem);
-  line-height:1.6;
+  font-size:clamp(1.05rem,1.5vw,1.2rem);
+  font-weight:400;
+  letter-spacing:-.01em;
+  line-height:1.55;
   color:var(--muted);
   max-width:48rem;
 }
 .about-teaser{
   margin:0;
-  font-size:clamp(1rem,1.35vw,1.12rem);
+  font-size:clamp(1.05rem,1.5vw,1.2rem);
+  font-weight:400;
+  letter-spacing:-.01em;
   line-height:1.55;
   color:var(--ink);
 }
 .about-meta{
   margin:0;
-  font-family:var(--font-mono);
-  font-size:.9rem;
-  line-height:1.7;
+  font-size:clamp(1.05rem,1.5vw,1.2rem);
+  font-weight:400;
+  letter-spacing:-.01em;
+  line-height:1.55;
   color:var(--muted);
 }
 .about-meta .about-mail{
   color:var(--ink);
   font-weight:600;
+  font-family:inherit;
   text-decoration:none;
   border-bottom:1px solid transparent;
   transition:border-color .2s ease,color .2s ease;
