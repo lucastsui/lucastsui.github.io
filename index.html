@@ -113,6 +113,7 @@ div.proj{cursor:default}
 .proj .tags{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;text-align:right}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-thumb{border-color:var(--accent)}
+.proj-thumb.no-edge{border:none;background:transparent}
 .proj-duo{display:flex;gap:6px;align-self:start}
 .proj-duo img{height:clamp(116px,15vw,136px);width:auto;display:block;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-duo img{border-color:var(--accent)}
@@ -308,7 +309,7 @@ div.proj{cursor:default}
           <h3>Socrates</h3>
           <p class="desc">This is an application to accelerate learning compared to passive lectures and brute-force recall practice by implementing pedagogic theories such as ZPD-based question targeting, cognitive load theory, the Socratic method, and related ideas. It progressively trains a student's knowledge-recall capability by tracking their mastery of a subject and asking questions appropriate for their level of understanding. A knowledge graph is generated dynamically to trace the background knowledge necessary to master a concept. <span class="proj-link">github.com/lucastsui/socrates</span></p>
         </div>
-        <img class="proj-thumb" src="/socrates-ascii.png" width="768" height="600" alt="ASCII portrait of Socrates" loading="lazy">
+        <img class="proj-thumb no-edge" src="/socrates-ascii.png" width="736" height="568" alt="ASCII portrait of Socrates" loading="lazy">
       </a>
     </div>
   </section>
