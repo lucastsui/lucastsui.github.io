@@ -133,6 +133,8 @@ div.proj{cursor:default}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-thumb{border-color:var(--accent)}
 .proj-thumb.no-edge{border:none;background:transparent}
+/* Keep animated thumbs compact so large source GIFs don't inflate the card */
+.proj-thumb.is-gif{width:clamp(150px,20vw,210px);max-height:132px;object-fit:cover;object-position:center top}
 .proj-duo{display:flex;gap:6px;align-self:start}
 .proj-duo img{height:clamp(116px,15vw,136px);width:auto;display:block;border:1px solid var(--line);transition:border-color .25s ease}
 .proj:hover .proj-duo img{border-color:var(--accent)}
@@ -291,6 +293,7 @@ div.proj{cursor:default}
   .proj{grid-template-columns:2.2rem minmax(0,1fr)}
   .proj .tags{grid-column:1/-1;text-align:left;margin-top:.7em}
   .proj-thumb{grid-column:1/-1;width:clamp(180px,55vw,260px);margin-top:.9em}
+  .proj-thumb.is-gif{max-height:150px}
   .proj-duo{grid-column:1/-1;margin-top:.9em}
 }
 
@@ -350,8 +353,23 @@ div.proj{cursor:default}
     </div>
 
     <div class="proj-list">
-      <div class="proj reveal" id="proj-self-improving-factory">
+      <a class="proj reveal" href="https://github.com/lucastsui/ModelSoup" target="_blank" rel="noopener" aria-label="Model Soup, open GitHub repository">
         <span class="num">01</span>
+        <div>
+          <h3>Model Soup</h3>
+          <p class="desc">An evolutionary framework that automates hypothesis generation, mutation, and verification. LLMs propose executable prediction models into dual pools (parameter-based and neural), which compete under a falsifiable cross-validated score and recombine across generations.</p>
+          <p class="desc">Tested on multi-decade London housing data with unstructured news: the loop converges in a few generations on simple, high-scoring forecasts. <span class="proj-link">github.com/lucastsui/ModelSoup</span></p>
+          <div class="tags" aria-label="Tags">
+            <span class="tag">evolutionary AI</span>
+            <span class="tag">hypothesis search</span>
+            <span class="tag">LLM agents</span>
+            <span class="tag">Python</span>
+          </div>
+        </div>
+        <img class="proj-thumb is-gif" src="/model-soup-demo.gif" width="420" height="263" alt="Model Soup evolution demo: scores rising across generations" loading="lazy">
+      </a>
+      <div class="proj reveal" id="proj-self-improving-factory">
+        <span class="num">02</span>
         <div>
           <h3>Self-Improving Factory</h3>
           <p class="desc">I make self-expanding and self-improving simulated factories.</p>
@@ -368,7 +386,7 @@ div.proj{cursor:default}
         <img class="proj-thumb" src="/self-improving-factory.png" width="2606" height="1628" alt="Self-Improving Factory layout snapshot" loading="lazy">
       </div>
       <div class="proj reveal">
-        <span class="num">02</span>
+        <span class="num">03</span>
         <div>
           <h3>AI-Assisted Atmospheric Modeling</h3>
           <p class="desc">The exosphere is the outermost layer of the atmosphere that protects satellites and ground electronics by absorbing and scattering the energy of solar storms.</p>
@@ -383,7 +401,7 @@ div.proj{cursor:default}
         </div>
       </div>
       <div class="proj reveal">
-        <span class="num">03</span>
+        <span class="num">04</span>
         <div>
           <h3>Autonomous Asset Allocation</h3>
           <p class="desc">By deploying in-house AI, I experiment with transforming a real estate management company into a portfolio management company, evaluate asset quality, and make buy/sell/hold decisions. Current effort is in devising rules that survive long feedback loops with noisy market signals.</p>
@@ -396,7 +414,7 @@ div.proj{cursor:default}
         </div>
       </div>
       <a class="proj reveal" href="https://github.com/lucastsui/bjork-cube" target="_blank" rel="noopener" aria-label="Björk Cube, open GitHub repository">
-        <span class="num">04</span>
+        <span class="num">05</span>
         <div>
           <h3>Björk Cube</h3>
           <p class="desc">A hackathon experiment to use social-media methods to understand the internal space of Magenta RealTime 2, a music generation model created by Google.</p>
@@ -411,7 +429,7 @@ div.proj{cursor:default}
         <img class="proj-thumb" src="/bjork-cube.jpg" width="600" height="388" alt="The Björk Cube app, a navigable hypercube of Magenta RealTime 2's style space" loading="lazy">
       </a>
       <a class="proj reveal" href="https://github.com/lucastsui/splat-room-edit" target="_blank" rel="noopener" aria-label="Splat Room-Edit, open GitHub repository">
-        <span class="num">05</span>
+        <span class="num">06</span>
         <div>
           <h3>Splat Room-Edit</h3>
           <p class="desc">An experiment that turns a 20-second phone video of a room into a 3D Gaussian splat you can walk through in a browser, then recolors just the wall with one command while the art and furniture stay untouched.</p>
@@ -428,7 +446,7 @@ div.proj{cursor:default}
         </div>
       </a>
       <a class="proj reveal" href="https://github.com/lucastsui/collatz-research" target="_blank" rel="noopener" aria-label="Collatz Conjecture Research, open GitHub repository">
-        <span class="num">06</span>
+        <span class="num">07</span>
         <div>
           <h3>Collatz Conjecture Research</h3>
           <p class="desc">An autonomous AI research loop that systematically attacks the Collatz conjecture: predict before computing, hunt for surprises, adversarially attack emerging patterns, and ban approaches that circle known dead ends. <span class="proj-link">github.com/lucastsui/collatz-research</span></p>
@@ -440,7 +458,7 @@ div.proj{cursor:default}
         </div>
       </a>
       <a class="proj reveal" href="https://github.com/lucastsui/socrates" target="_blank" rel="noopener" aria-label="Socrates, open GitHub repository">
-        <span class="num">07</span>
+        <span class="num">08</span>
         <div>
           <h3>Socrates</h3>
           <p class="desc">This is an application to accelerate learning compared to passive lectures and brute-force recall practice by implementing pedagogic theories such as ZPD-based question targeting, cognitive load theory, the Socratic method, and related ideas. It progressively trains a student's knowledge-recall capability by tracking their mastery of a subject and asking questions appropriate for their level of understanding. A knowledge graph is generated dynamically to trace the background knowledge necessary to master a concept. <span class="proj-link">github.com/lucastsui/socrates</span></p>
