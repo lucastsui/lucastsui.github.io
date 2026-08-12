@@ -361,12 +361,84 @@ div.proj{cursor:default}
   user-select:none;
 }
 .pro-diagram-wrap.is-panning{cursor:grabbing;}
+/*
+ * Left-edge ruler: glued to the left of the viewport (no horizontal pan).
+ * Segment top/height track diagram Y (vertical pan + zoom) so brackets stay
+ * aligned with Education / Philosophy / Application. Labels use fixed CSS
+ * font-size so they never get squeezed by non-uniform SVG scaling.
+ */
+.pro-diagram-ruler{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  /* label column + bracket column */
+  width:72px;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(to right, var(--bg) 88%, transparent);
+  overflow:hidden;
+}
+.pro-rail-seg{
+  position:absolute;
+  left:0;
+  right:0;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  opacity:0;
+  transition:opacity .12s ease;
+  /* layout: [ label | bracket ] */
+  padding:2px 0 2px 2px;
+}
+.pro-rail-seg.is-visible{
+  opacity:1;
+}
+/* Label always to the LEFT of the square bracket */
+.pro-rail-label{
+  flex:1 1 auto;
+  min-width:0;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  white-space:nowrap;
+  font-family:var(--font-sans);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  line-height:1.1;
+  /* keep glyphs inside the label column (not over the diagram) */
+  max-height:100%;
+  overflow:hidden;
+  box-sizing:border-box;
+  padding:4px 0;
+}
+/* Square bracket on the right edge of the rail */
+.pro-rail-bracket{
+  flex:0 0 12px;
+  align-self:stretch;
+  width:12px;
+  margin:2px 8px 2px 2px;
+  border-left:1.5px solid var(--muted);
+  border-top:1.5px solid var(--muted);
+  border-bottom:1.5px solid var(--muted);
+  box-sizing:border-box;
+}
 .pro-diagram-stage{
   width:100%;
   height:100%;
   display:flex;
   align-items:center;
   justify-content:center;
+  /* keep content clear of the fixed left ruler */
+  padding-left:72px;
+  box-sizing:border-box;
 }
 .pro-diagram{
   display:block;
@@ -607,6 +679,21 @@ div.proj{cursor:default}
       <div class="pro-project-card" id="proProjectCard" role="dialog" aria-hidden="true" hidden></div>
 
       <div class="pro-diagram-wrap" id="proDiagramViewport" role="img" aria-label="Diagram from education and philosophy through two solution paths to applications including AYQ, Model Soup, LLM systems, and related research. Zoom and pan enabled.">
+        <!-- Ruler: left ledge fixed in X; segment Y tracks diagram pan/zoom; labels never squeezed -->
+        <div class="pro-diagram-ruler" id="proDiagramRuler" aria-hidden="true">
+          <div class="pro-rail-seg" data-y0="36" data-y1="170">
+            <span class="pro-rail-label">Education</span>
+            <span class="pro-rail-bracket"></span>
+          </div>
+          <div class="pro-rail-seg" data-y0="186" data-y1="512">
+            <span class="pro-rail-label">Philosophy</span>
+            <span class="pro-rail-bracket"></span>
+          </div>
+          <div class="pro-rail-seg" data-y0="528" data-y1="856">
+            <span class="pro-rail-label">Application</span>
+            <span class="pro-rail-bracket"></span>
+          </div>
+        </div>
         <div class="pro-diagram-stage" id="proDiagramStage">
       <svg class="pro-diagram" viewBox="0 0 1420 860" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 
@@ -620,19 +707,6 @@ div.proj{cursor:default}
           <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
         </marker>
       </defs>
-
-      <!-- Side brackets: inside SVG so they pan/zoom with the diagram (stay aligned with sections) -->
-      <path d="M 52 36 H 40 V 170 H 52" fill="none" stroke="currentColor" class="d-mid" stroke-width="1.5" stroke-linecap="square" />
-      <text x="26" y="103" text-anchor="middle" dominant-baseline="middle"
-            transform="rotate(-90 26 103)" font-size="18" class="d-label" letter-spacing="2">EDUCATION</text>
-
-      <path d="M 52 186 H 40 V 512 H 52" fill="none" stroke="currentColor" class="d-mid" stroke-width="1.5" stroke-linecap="square" />
-      <text x="26" y="349" text-anchor="middle" dominant-baseline="middle"
-            transform="rotate(-90 26 349)" font-size="18" class="d-label" letter-spacing="2">PHILOSOPHY</text>
-
-      <path d="M 52 528 H 40 V 856 H 52" fill="none" stroke="currentColor" class="d-mid" stroke-width="1.5" stroke-linecap="square" />
-      <text x="26" y="692" text-anchor="middle" dominant-baseline="middle"
-            transform="rotate(-90 26 692)" font-size="18" class="d-label" letter-spacing="2">APPLICATION</text>
 
       <!-- ===== EDUCATION ===== -->
       <rect x="210" y="40" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-soft" />
@@ -1062,9 +1136,13 @@ div.proj{cursor:default}
 
 
   // Professional summary diagram: zoom + pan via SVG viewBox (crisp text; no CSS scale blur)
+  // Left ruler uses the same vertical viewBox (vy, vh) so it pans/zooms vertically with the
+  // diagram, but keeps X fixed (always on the left ledge).
   (function(){
     var viewport=document.getElementById('proDiagramViewport');
     var svg=viewport&&viewport.querySelector('svg.pro-diagram');
+    var ruler=document.getElementById('proDiagramRuler');
+    var railSegs=ruler?Array.prototype.slice.call(ruler.querySelectorAll('.pro-rail-seg')):[];
     if(!viewport||!svg) return;
 
     var BASE_W=1420, BASE_H=860;
@@ -1074,9 +1152,44 @@ div.proj{cursor:default}
     var pointers=new Map();
     var pinchStartDist=0, pinchStartVw=BASE_W, pinchStartVh=BASE_H, pinchStartVx=0, pinchStartVy=0;
 
-    function scale(){ return BASE_W / vw; }
+    function diagramYToViewportY(y){
+      // Map diagram Y through the main SVG's vertical scale into the wrap's pixel space.
+      // Main SVG fills the stage (below the left padding); use its getBoundingClientRect
+      // so ruler segments stay aligned with content under any zoom/pan.
+      var svgRect=svg.getBoundingClientRect();
+      var wrapRect=viewport.getBoundingClientRect();
+      if(!svgRect.height) return 0;
+      return (svgRect.top-wrapRect.top)+((y-vy)/vh)*svgRect.height;
+    }
+
+    function updateRuler(){
+      if(!railSegs.length) return;
+      var wrapH=viewport.clientHeight||0;
+      railSegs.forEach(function(seg){
+        var y0=parseFloat(seg.getAttribute('data-y0'),10);
+        var y1=parseFloat(seg.getAttribute('data-y1'),10);
+        var top=diagramYToViewportY(y0);
+        var bot=diagramYToViewportY(y1);
+        // Clip to the visible viewport
+        var visTop=Math.max(0, top);
+        var visBot=Math.min(wrapH, bot);
+        var h=visBot-visTop;
+        if(h<8){
+          seg.classList.remove('is-visible');
+          seg.style.top='0';
+          seg.style.height='0';
+          return;
+        }
+        seg.classList.add('is-visible');
+        seg.style.top=visTop+'px';
+        seg.style.height=h+'px';
+      });
+    }
+
     function apply(){
       svg.setAttribute('viewBox', vx+' '+vy+' '+vw+' '+vh);
+      // After viewBox changes, layout may need a frame for getBoundingClientRect
+      requestAnimationFrame(updateRuler);
     }
     function clampVw(w){
       var minW=BASE_W/maxScale, maxW=BASE_W/minScale;
@@ -1192,6 +1305,8 @@ div.proj{cursor:default}
         else reset();
       });
     });
+
+    window.addEventListener('resize', function(){ requestAnimationFrame(updateRuler); });
 
     apply();
   })();
