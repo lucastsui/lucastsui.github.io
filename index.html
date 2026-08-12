@@ -10,10 +10,10 @@
 <meta property="og:title" content="LUCAS TSUI">
 <meta property="og:description" content="Portfolio and experimental AI applications by Lucas Tsui">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://ayq-ai.com/">
+<meta property="og:url" content="https://lucas-tsui.com/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%230C0C0F'/%3E%3Crect%20x='9'%20y='9'%20width='14'%20height='14'%20fill='%23ECECEF'/%3E%3C/svg%3E">
-<script>(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 <style>
 /* ---------- Tokens ---------- */
 :root{
@@ -23,13 +23,6 @@
   --font-sans:"Helvetica Neue",Helvetica,"Arial Nova",Arial,sans-serif;
   --font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,"Cascadia Mono","Roboto Mono",monospace;
   --wrap:1180px;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0C0C0F; --ink:#ECECEF; --muted:#9698A2; --faint:#6C6E78;
-    --line:#22232D; --line-strong:#33343F;
-    --accent:#ECECEF; --accent-soft:rgba(236,236,239,0.12); --on-accent:#0C0C0F;
-  }
 }
 :root[data-theme="dark"]{
   --bg:#0C0C0F; --ink:#ECECEF; --muted:#9698A2; --faint:#6C6E78;
@@ -1116,8 +1109,7 @@ div.proj{cursor:default}
   var root=document.documentElement;
   var toggle=document.getElementById('themeToggle');
   function current(){
-    return root.getAttribute('data-theme') ||
-      (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    return root.getAttribute('data-theme')==='dark'?'dark':'light';
   }
   function sync(){toggle.setAttribute('aria-pressed', current()==='dark'?'true':'false');}
   sync();
