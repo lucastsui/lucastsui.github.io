@@ -63,8 +63,8 @@ a{color:inherit}
 .nav-links a{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s ease}
 .nav-links a:hover{color:var(--ink)}
 .nav-icons{display:flex;align-items:center;gap:4px}
-.nav-icons a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;color:var(--muted);text-decoration:none;transition:color .2s ease}
-.nav-icons a:hover{color:var(--ink)}
+.nav-icons a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;color:var(--ink);text-decoration:none;transition:opacity .2s ease}
+.nav-icons a:hover{opacity:.7;color:var(--ink)}
 .nav-icons svg{width:18px;height:18px;display:block;fill:currentColor}
 .theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .2s ease,color .2s ease}
 .theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
@@ -171,12 +171,12 @@ div.proj{cursor:default}
   letter-spacing:.14em;
 }
 .about-intro{
-  margin-top:clamp(12px,2vw,20px);
+  margin-top:clamp(8px,1.2vw,12px);
   max-width:52rem;
   margin-inline:auto;
   display:flex;
   flex-direction:column;
-  gap:clamp(14px,2vw,20px);
+  gap:clamp(4px,0.6vw,8px);
   text-align:center;
   align-items:center;
 }
@@ -230,6 +230,11 @@ div.proj{cursor:default}
 .about-meta .about-mail:hover{
   color:var(--accent);
   border-bottom-color:var(--accent);
+}
+.about-label{
+  font-weight:600;
+  color:var(--ink);
+  letter-spacing:-.01em;
 }
 
 /* ---------- Footer ---------- */
@@ -302,6 +307,238 @@ div.proj{cursor:default}
   .reveal{opacity:1;transform:none;transition:none}
   *{transition-duration:.001ms!important;animation-duration:.001ms!important}
 }
+
+/* ---------- Professional Summary (diagram) ---------- */
+#professional-summary .sec-head{
+  margin-bottom:clamp(18px,3vw,28px);
+}
+.pro-diagram-shell{
+  position:relative;
+  width:100%;
+}
+.pro-diagram-toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+}
+.pro-diagram-toolbar button{
+  font-family:var(--font-mono);
+  font-size:1.05rem;
+  font-weight:600;
+  line-height:1;
+  color:var(--ink);
+  background:transparent;
+  border:1px solid var(--line-strong);
+  border-radius:2px;
+  min-width:34px;
+  height:34px;
+  padding:0;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:border-color .2s ease,background .2s ease;
+}
+.pro-diagram-toolbar button:hover{
+  border-color:var(--ink);
+  background:var(--accent-soft);
+}
+.pro-diagram-toolbar .pro-reset-icon{
+  display:block;
+}
+.pro-diagram-wrap{
+  position:relative;
+  width:100%;
+  height:min(72vh,640px);
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:2px;
+  background:transparent;
+  touch-action:none;
+  cursor:grab;
+  user-select:none;
+}
+.pro-diagram-wrap.is-panning{cursor:grabbing;}
+.pro-diagram-stage{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.pro-diagram{
+  display:block;
+  width:100%;
+  height:100%;
+  color:var(--ink);
+  pointer-events:none;
+  /* Keep SVG vectors sharp when viewBox zooms (no CSS scale blur) */
+  shape-rendering:geometricPrecision;
+  text-rendering:geometricPrecision;
+}
+.pro-diagram text{
+  fill:currentColor;
+  font-family:var(--font-sans);
+}
+.pro-diagram .d-label{
+  fill:var(--muted);
+}
+.pro-diagram .d-ink{
+  stroke:var(--ink);
+  color:var(--ink);
+}
+.pro-diagram .d-mid{
+  stroke:var(--muted);
+  color:var(--muted);
+}
+.pro-diagram .d-soft{
+  stroke:var(--faint);
+  color:var(--faint);
+}
+.pro-diagram #pro-arrow path{
+  fill:var(--muted);
+}
+.pro-diagram #pro-arrow-strong path{
+  fill:var(--ink);
+}
+.pro-diagram rect.d-fill-soft{
+  fill:var(--line);
+}
+
+.pro-diagram rect.d-hot{
+  cursor:pointer;
+  pointer-events:all;
+  transition:fill .15s ease, stroke .15s ease;
+}
+.pro-diagram rect.d-hot:hover,
+.pro-diagram rect.d-hot.is-hover{
+  fill:var(--line-strong);
+  stroke:var(--ink);
+}
+.pro-project-card{
+  position:absolute;
+  z-index:20;
+  width:min(420px, calc(100% - 24px));
+  max-width:420px;
+  max-height:min(70vh, 520px);
+  overflow:auto;
+  padding:0;
+  border:1px solid var(--line-strong);
+  border-radius:4px;
+  background:var(--bg);
+  color:var(--ink);
+  box-shadow:0 12px 36px rgba(0,0,0,.14);
+  pointer-events:auto;
+  opacity:0;
+  transform:translateY(4px);
+  transition:opacity .15s ease, transform .15s ease;
+  visibility:hidden;
+  cursor:pointer;
+}
+.pro-project-card.is-open{
+  opacity:1;
+  transform:translateY(0);
+  visibility:visible;
+}
+/* Compact clone of .proj: text left, thumbnail right (thumb height = text block) */
+.pro-project-card .proj{
+  display:grid;
+  grid-template-columns:2.2rem minmax(0,1fr) auto;
+  grid-template-rows:auto;
+  gap:10px 12px;
+  align-items:stretch;
+  padding:14px 16px;
+  border-bottom:none;
+  margin:0;
+  text-decoration:none;
+  color:inherit;
+  background:transparent;
+}
+.pro-project-card .proj .num{
+  font-size:.72rem;
+  padding-top:3px;
+  grid-column:1;
+  grid-row:1;
+}
+.pro-project-card .proj > div{
+  grid-column:2;
+  grid-row:1;
+  min-width:0;
+}
+.pro-project-card .proj h3{
+  font-size:1.1rem;
+  margin:0;
+}
+.pro-project-card .proj .desc{
+  margin-top:.4em;
+  font-size:.86rem;
+  max-width:none;
+  line-height:1.45;
+}
+.pro-project-card .proj .desc + .desc{margin-top:.5em;}
+.pro-project-card .proj .tags{
+  margin-top:.65em;
+  font-size:.58rem;
+}
+.pro-project-card .proj .tags .tag{
+  padding:3px 7px;
+}
+/* Thumbnail / duo sit in column 3, right of text — full image visible (contain, not crop) */
+.pro-project-card .proj-thumb,
+.pro-project-card .proj-duo{
+  grid-column:3;
+  grid-row:1;
+  align-self:start;
+  width:auto;
+  max-width:150px;
+  min-width:0;
+  max-height:min(100%, 200px);
+  margin:0;
+  object-fit:contain;
+  object-position:center center;
+  background:transparent;
+}
+.pro-project-card .proj-thumb.is-gif{
+  width:auto;
+  max-width:150px;
+  max-height:min(100%, 200px);
+  height:auto;
+  object-fit:contain;
+}
+.pro-project-card .proj-duo{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  gap:4px;
+  align-items:flex-start;
+  max-width:160px;
+}
+.pro-project-card .proj-duo img{
+  flex:1 1 0;
+  width:auto;
+  max-width:76px;
+  height:auto;
+  max-height:120px;
+  object-fit:contain;
+  object-position:center center;
+}
+/* Projects with no media: two-column layout only */
+.pro-project-card .proj:not(:has(.proj-thumb)):not(:has(.proj-duo)){
+  grid-template-columns:2.2rem minmax(0,1fr);
+}
+.proj-flash{
+  outline:2px solid var(--ink);
+  outline-offset:6px;
+  transition:outline-color .3s ease;
+}
+
+
+@media (max-width:720px){
+  .pro-diagram-wrap{height:min(62vh,520px);}
+}
+
 </style>
 </head>
 <body>
@@ -312,14 +549,15 @@ div.proj{cursor:default}
     <div class="nav-right">
       <nav class="nav-links" aria-label="Primary">
         <a href="#about">About</a>
+        <a href="#professional-summary">Professional Summary</a>
         <a href="#projects">Projects</a>
       </nav>
       <div class="nav-icons" aria-label="Contact">
-        <a href="mailto:lucas.r.tsui@gmail.com" aria-label="Email Lucas Tsui">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        </a>
         <a href="https://www.linkedin.com/in/lucas-tsui-30a96251/" target="_blank" rel="noopener" aria-label="Lucas Tsui on LinkedIn">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z"/></svg>
+        </a>
+        <a href="https://github.com/lucastsui" target="_blank" rel="noopener" aria-label="Lucas Tsui on GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .3C5.37.3 0 5.67 0 12.3c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.28 0 .32.22.7.83.58C20.57 22.1 24 17.6 24 12.3 24 5.67 18.63.3 12 .3z"/></svg>
         </a>
       </div>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light or dark theme" aria-pressed="false">
@@ -338,10 +576,300 @@ div.proj{cursor:default}
     </div>
 
     <div class="about-intro reveal">
-      <p class="about-tagline">Physics &amp; law graduate | Founder of a data analysis company | Master in Computer Science Candidate</p>
-      <p class="about-body">I am interested in scaling systems, problem decomposition, how different decomposition/world models coordinate, which leads me to cognition, and philosophy of science.</p>
-      <p class="about-teaser">Looking for PhD, startups, and interesting projects.</p>
-      <p class="about-meta">Wants to collab? Let's talk at <a class="about-mail" href="mailto:lucas.r.tsui@gmail.com">lucas.r.tsui [at] gmail [dot] com</a></p>
+      <p class="about-tagline"><span class="about-label">Background:</span> B.Sc. Physics | Law (LLB) | M.Sc. Com Science | Founder</p>
+      <p class="about-body"><span class="about-label">Interest:</span> Scaling social and digital systems under competing and incompatible philosophies.</p>
+      <p class="about-teaser"><span class="about-label">Looking for:</span> PhD, startups, and interesting projects.</p>
+      <p class="about-meta">Want to collab? Let's talk at <a class="about-mail" href="mailto:lucas.r.tsui@gmail.com">lucas.r.tsui [at] gmail [dot] com</a></p>
+    </div>
+  </section>
+
+
+  <section class="section wrap" id="professional-summary" aria-labelledby="pro-sum-h">
+    <div class="sec-head reveal">
+      <div>
+        <h2 class="kicker" id="pro-sum-h">Professional Summary</h2>
+      </div>
+    </div>
+    <div class="pro-diagram-shell reveal">
+      <div class="pro-diagram-toolbar" role="toolbar" aria-label="Diagram zoom controls">
+        <button type="button" data-diagram-zoom="in" aria-label="Zoom in" title="Zoom in">+</button>
+        <button type="button" data-diagram-zoom="out" aria-label="Zoom out" title="Zoom out">−</button>
+        <button type="button" data-diagram-zoom="reset" aria-label="Reset view" title="Reset view">
+          <svg class="pro-reset-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 12a9 9 0 1 0 3-6.7"/>
+            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 4v5h5"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="pro-project-card" id="proProjectCard" role="dialog" aria-hidden="true" hidden></div>
+
+      <div class="pro-diagram-wrap" id="proDiagramViewport" role="img" aria-label="Diagram from education and philosophy through two solution paths to applications including AYQ, Model Soup, LLM systems, and related research. Zoom and pan enabled.">
+        <div class="pro-diagram-stage" id="proDiagramStage">
+      <svg class="pro-diagram" viewBox="0 0 1420 860" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+      <defs>
+        <marker id="pro-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+        </marker>
+        <marker id="pro-arrow-strong" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+        </marker>
+      </defs>
+
+      <!-- Side brackets: inside SVG so they pan/zoom with the diagram (stay aligned with sections) -->
+      <path d="M 52 36 H 40 V 170 H 52" fill="none" stroke="currentColor" class="d-mid" stroke-width="1.5" stroke-linecap="square" />
+      <text x="26" y="103" text-anchor="middle" dominant-baseline="middle"
+            transform="rotate(-90 26 103)" font-size="18" class="d-label" letter-spacing="2">EDUCATION</text>
+
+      <path d="M 52 186 H 40 V 512 H 52" fill="none" stroke="currentColor" class="d-mid" stroke-width="1.5" stroke-linecap="square" />
+      <text x="26" y="349" text-anchor="middle" dominant-baseline="middle"
+            transform="rotate(-90 26 349)" font-size="18" class="d-label" letter-spacing="2">PHILOSOPHY</text>
+
+      <path d="M 52 528 H 40 V 856 H 52" fill="none" stroke="currentColor" class="d-mid" stroke-width="1.5" stroke-linecap="square" />
+      <text x="26" y="692" text-anchor="middle" dominant-baseline="middle"
+            transform="rotate(-90 26 692)" font-size="18" class="d-label" letter-spacing="2">APPLICATION</text>
+
+      <!-- ===== EDUCATION ===== -->
+      <rect x="210" y="40" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="310" y="59" dominant-baseline="middle" text-anchor="middle" font-size="12">B.Sc. Physics</text>
+      <path d="M310 78 V96 H230 V112" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="130" y="114" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="230" y="133" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="currentColor">Quantum Physics</text>
+
+      <rect x="490" y="40" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="590" y="59" dominant-baseline="middle" text-anchor="middle" font-size="12">Law (LLB)</text>
+      <path d="M590 78 V96 H470 V112" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="370" y="114" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="470" y="133" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="currentColor">Constitutional Law</text>
+
+      <rect x="770" y="40" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="870" y="59" dominant-baseline="middle" text-anchor="middle" font-size="12">M.Sc Computer Science</text>
+      <path d="M870 78 V96 H710 V112" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <path d="M870 78 V96 H950 V112" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="610" y="114" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="710" y="133" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="currentColor">Computer Network</text>
+      <rect x="850" y="114" width="200" height="38" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="950" y="133" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="currentColor">Artificial Intelligence</text>
+
+      <!-- ===== PHILOSOPHY ===== -->
+      <line x1="230" y1="152" x2="230" y2="186" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <line x1="470" y1="152" x2="470" y2="186" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <line x1="710" y1="152" x2="710" y2="186" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <line x1="950" y1="152" x2="950" y2="186" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <path d="M950 152 V168 H1190 V186" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+
+      <rect x="120" y="188" width="220" height="88" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="230" y="220" text-anchor="middle" font-size="12">
+        <tspan x="230" dy="0">There are multiple interpretations</tspan>
+        <tspan x="230" dy="16">of the same physical</tspan>
+        <tspan x="230" dy="16">reality.</tspan>
+      </text>
+
+      <rect x="360" y="188" width="220" height="88" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="470" y="220" text-anchor="middle" font-size="12">
+        <tspan x="470" dy="0">There is no universally accepted way</tspan>
+        <tspan x="470" dy="16">to elevate a legal principle to</tspan>
+        <tspan x="470" dy="16">constitutional status.</tspan>
+      </text>
+
+      <rect x="600" y="188" width="220" height="88" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="710" y="220" text-anchor="middle" font-size="12">
+        <tspan x="710" dy="0">Compatibility issues between different</tspan>
+        <tspan x="710" dy="16">network protocols are irreconcilable</tspan>
+        <tspan x="710" dy="16">without brittle translations.</tspan>
+      </text>
+
+      <rect x="840" y="188" width="220" height="88" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="950" y="220" text-anchor="middle" font-size="12">
+        <tspan x="950" dy="0">For the same data there are</tspan>
+        <tspan x="950" dy="16">infinite number of ways to</tspan>
+        <tspan x="950" dy="16">generalize its patterns.</tspan>
+      </text>
+
+      <rect x="1080" y="188" width="220" height="88" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="1190" y="220" text-anchor="middle" font-size="12">
+        <tspan x="1190" dy="0">Intelligence iteratively detects</tspan>
+        <tspan x="1190" dy="16">and applies patterns to</tspan>
+        <tspan x="1190" dy="16">the world.</tspan>
+      </text>
+
+      <line x1="1190" y1="276" x2="1190" y2="310" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="1080" y="312" width="220" height="72" rx="2" fill="none" stroke="currentColor" class="d-soft" />
+      <text x="1190" y="340" text-anchor="middle" font-size="12">
+        <tspan x="1190" dy="0">Intelligence is a mechanizable</tspan>
+        <tspan x="1190" dy="16">and scalable phenomenon.</tspan>
+      </text>
+
+      <!-- ===== CENTRAL QUESTION ===== -->
+      <path d="M230 276 V300 H590" fill="none" stroke="currentColor" class="d-soft" />
+      <path d="M470 276 V300 H590" fill="none" stroke="currentColor" class="d-soft" />
+      <path d="M710 276 V300 H590" fill="none" stroke="currentColor" class="d-soft" />
+      <path d="M950 276 V300 H590" fill="none" stroke="currentColor" class="d-soft" />
+      <line x1="590" y1="300" x2="590" y2="318" stroke="currentColor" class="d-ink" marker-end="url(#pro-arrow-strong)" />
+
+      <rect x="200" y="320" width="780" height="56" rx="2" fill="none" stroke="currentColor" class="d-ink" stroke-width="3" />
+      <text x="590" y="340" text-anchor="middle" font-size="10" fill="currentColor" font-weight="700"
+            letter-spacing="1.5">CENTRAL QUESTION</text>
+      <text x="590" y="357" text-anchor="middle" font-size="14" font-weight="700">
+        How to keep systems working and scalable when incompatibility is everywhere?
+      </text>
+
+      <!-- CQ → Solutions (cx 280 & 820) -->
+      <line x1="590" y1="376" x2="590" y2="402" stroke="currentColor" class="d-ink" />
+      <path d="M280 402 H820" fill="none" stroke="currentColor" class="d-ink" />
+      <line x1="280" y1="402" x2="280" y2="428" stroke="currentColor" class="d-ink" marker-end="url(#pro-arrow-strong)" />
+      <line x1="820" y1="402" x2="820" y2="428" stroke="currentColor" class="d-ink" marker-end="url(#pro-arrow-strong)" />
+
+      <!-- ========== APPLICATION ==========
+           Leaf: 200×52, 2-line text first baseline y+20 dy=14 (equal internal margins)
+           Branch: 220×44, single-line centered
+           Solution: 400×64  (same size)
+           Gh=20 between mid-row leaves
+      -->
+
+      <!-- Solution 1 & 2 — same size 400×64 -->
+      <rect x="80" y="430" width="400" height="64" rx="2" fill="none" stroke="currentColor" class="d-ink" stroke-width="1.5" />
+      <text x="280" y="446" text-anchor="middle" font-size="10" letter-spacing="1">Solution 1</text>
+      <text x="280" y="459" text-anchor="middle" font-size="12">
+        <tspan x="280" dy="0">Improve the system faster than it becomes</tspan>
+        <tspan x="280" dy="11">wasteful in money and energy,</tspan>
+        <tspan x="280" dy="11">i.e., increase in entropy.</tspan>
+      </text>
+
+      <rect x="620" y="430" width="400" height="64" rx="2" fill="none" stroke="currentColor" class="d-ink" stroke-width="1.5" />
+      <text x="820" y="446" text-anchor="middle" font-size="10" letter-spacing="1">Solution 2</text>
+      <text x="820" y="459" text-anchor="middle" font-size="12">
+        <tspan x="820" dy="0">Increase intelligence to research unifying</tspan>
+        <tspan x="820" dy="11">theories to make the pie bigger, i.e.,</tspan>
+        <tspan x="820" dy="11">push forward the Pareto frontier.</tspan>
+      </text>
+
+      <!-- Branch row — same size 220×44, Gh equal under each solution -->
+      <line x1="280" y1="494" x2="280" y2="528" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="170" y="530" width="220" height="44" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="280" y="552" dominant-baseline="middle" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="currentColor">Self Improving Systems</text>
+
+      <path d="M820 494 V512 H720 V528" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <path d="M820 494 V512 H1100 V528" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="610" y="530" width="220" height="44" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="720" y="552" dominant-baseline="middle" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="currentColor">Improve LLM Systems</text>
+      <rect x="990" y="530" width="220" height="44" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="1100" y="552" dominant-baseline="middle" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="currentColor">Improve Human Intelligence</text>
+
+      <!-- Mid-row leaves y=610: 200×52, Gh=20; cx: 180,400,620,840,1060,1280 -->
+      <!-- Mid-row forks from branch boxes -->
+      <path d="M280 574 V592 H180 V608" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <path d="M720 574 V592 H620 V608" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <path d="M720 574 V592 H840 V608" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <path d="M720 574 V592 H1060 V608" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <path d="M1100 574 V592 H1280 V608" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+
+      <!-- Mid-row leaves y=610: 200×52, Gh=20; cx: 180,400,620,840,1060,1280 -->
+      <!-- 1 Model Soup -->
+      <rect x="80" y="610" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="model-soup"/>
+      <text x="180" y="630" text-anchor="middle" font-size="12">
+        <tspan x="180" dy="0">Model Soup: Automatic</tspan>
+        <tspan x="180" dy="14">Hypothesis Generation</tspan>
+      </text>
+      <path d="M280 636 H298" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+
+      <!-- 2 NASA -->
+      <rect x="300" y="610" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="carruthers"/>
+      <text x="400" y="630" text-anchor="middle" font-size="12">
+        <tspan x="400" dy="0">NASA Carruthers</tspan>
+        <tspan x="400" dy="14">Project</tspan>
+      </text>
+
+      <!-- 3 Long Time-Horizon -->
+      <rect x="520" y="610" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="620" y="630" text-anchor="middle" font-size="12">
+        <tspan x="620" dy="0">Long Time-Horizon</tspan>
+        <tspan x="620" dy="14">AI Ops Research</tspan>
+      </text>
+
+      <!-- 4 Bottlenecks -->
+      <rect x="740" y="610" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="840" y="630" text-anchor="middle" font-size="12">
+        <tspan x="840" dy="0">Identify and solve hardware</tspan>
+        <tspan x="840" dy="14">&amp; software bottlenecks</tspan>
+      </text>
+
+      <!-- 5 Understand how AI thinks -->
+      <rect x="960" y="610" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="1060" y="630" text-anchor="middle" font-size="12">
+        <tspan x="1060" dy="0">Understand how</tspan>
+        <tspan x="1060" dy="14">AI thinks</tspan>
+      </text>
+
+      <!-- 6 Socrates -->
+      <rect x="1180" y="610" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="socrates"/>
+      <text x="1280" y="630" text-anchor="middle" font-size="12">
+        <tspan x="1280" dy="0">Socrates Self Learning</tspan>
+        <tspan x="1280" dy="14">System</tspan>
+      </text>
+
+      <!-- Child row y=698 -->
+      <line x1="180" y1="662" x2="180" y2="696" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="80" y="698" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="autonomous"/>
+      <text x="180" y="718" text-anchor="middle" font-size="12">
+        <tspan x="180" dy="0">Autonomous Forecast</tspan>
+        <tspan x="180" dy="14">Model Generation</tspan>
+      </text>
+
+      <!-- Collatz left of Factory Research (same 200×52, grey) -->
+      <rect x="300" y="698" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="collatz"/>
+      <text x="400" y="718" text-anchor="middle" font-size="12">
+        <tspan x="400" dy="0">Collatz Conjecture</tspan>
+        <tspan x="400" dy="14">Research</tspan>
+      </text>
+
+      <line x1="620" y1="662" x2="620" y2="696" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="520" y="698" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="factory"/>
+      <text x="620" y="718" text-anchor="middle" font-size="12">
+        <tspan x="620" dy="0">Self Improving</tspan>
+        <tspan x="620" dy="14">Factory Research</tspan>
+      </text>
+
+      <!-- Factory Research → In-House AI Deployment -->
+      <path d="M720 724 H738" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+
+      <line x1="840" y1="662" x2="840" y2="696" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="740" y="698" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot"  data-project="in-house"/>
+      <text x="840" y="718" text-anchor="middle" font-size="12">
+        <tspan x="840" dy="0">In-House AI</tspan>
+        <tspan x="840" dy="14">Deployment</tspan>
+      </text>
+
+      <line x1="1060" y1="662" x2="1060" y2="696" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="960" y="698" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="bjork"/>
+      <text x="1060" y="718" text-anchor="middle" font-size="12">
+        <tspan x="1060" dy="0">Bjrok Cube: mapping</tspan>
+        <tspan x="1060" dy="14">AI's mental space</tspan>
+      </text>
+
+      <!-- AYQ -->
+      <line x1="180" y1="750" x2="180" y2="784" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="80" y="786" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink" />
+      <text x="180" y="806" text-anchor="middle" font-size="12">
+        <tspan x="180" dy="0">AYQ Asset</tspan>
+        <tspan x="180" dy="14">Management Company</tspan>
+      </text>
+
+      <!-- In-House → AYQ right side -->
+      <path d="M840 750 V812 H282" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+
+      <!-- Intelligence → Solution 2 right -->
+      <path d="M1190 384 V462 H1022" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+
+    
+      </svg>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -353,7 +881,7 @@ div.proj{cursor:default}
     </div>
 
     <div class="proj-list">
-      <a class="proj reveal" href="https://github.com/lucastsui/ModelSoup" target="_blank" rel="noopener" aria-label="Model Soup, open GitHub repository">
+      <a class="proj reveal" id="proj-model-soup" href="https://github.com/lucastsui/ModelSoup" target="_blank" rel="noopener" aria-label="Model Soup, open GitHub repository">
         <span class="num">01</span>
         <div>
           <h3>Model Soup</h3>
@@ -366,7 +894,7 @@ div.proj{cursor:default}
             <span class="tag">Python</span>
           </div>
         </div>
-        <img class="proj-thumb is-gif" src="/model-soup-demo.gif" width="420" height="263" alt="Model Soup evolution demo: scores rising across generations" loading="lazy">
+        <img class="proj-thumb is-gif" src="model-soup-demo.gif" width="420" height="263" alt="Model Soup evolution demo: scores rising across generations" loading="lazy">
       </a>
       <div class="proj reveal" id="proj-self-improving-factory">
         <span class="num">02</span>
@@ -383,9 +911,9 @@ div.proj{cursor:default}
             <span class="tag">Lua</span>
           </div>
         </div>
-        <img class="proj-thumb" src="/self-improving-factory.png" width="2606" height="1628" alt="Self-Improving Factory layout snapshot" loading="lazy">
+        <img class="proj-thumb" src="self-improving-factory.png" width="2606" height="1628" alt="Self-Improving Factory layout snapshot" loading="lazy">
       </div>
-      <div class="proj reveal">
+      <div class="proj reveal" id="proj-carruthers">
         <span class="num">03</span>
         <div>
           <h3>AI-Assisted Atmospheric Modeling</h3>
@@ -400,7 +928,7 @@ div.proj{cursor:default}
           </div>
         </div>
       </div>
-      <div class="proj reveal">
+      <div class="proj reveal" id="proj-autonomous-asset">
         <span class="num">04</span>
         <div>
           <h3>Autonomous Asset Allocation</h3>
@@ -413,7 +941,7 @@ div.proj{cursor:default}
           </div>
         </div>
       </div>
-      <a class="proj reveal" href="https://github.com/lucastsui/bjork-cube" target="_blank" rel="noopener" aria-label="Björk Cube, open GitHub repository">
+      <a class="proj reveal" id="proj-bjork-cube" href="https://github.com/lucastsui/bjork-cube" target="_blank" rel="noopener" aria-label="Björk Cube, open GitHub repository">
         <span class="num">05</span>
         <div>
           <h3>Björk Cube</h3>
@@ -426,7 +954,7 @@ div.proj{cursor:default}
             <span class="tag">HTML</span>
           </div>
         </div>
-        <img class="proj-thumb" src="/bjork-cube.jpg" width="600" height="388" alt="The Björk Cube app, a navigable hypercube of Magenta RealTime 2's style space" loading="lazy">
+        <img class="proj-thumb" src="bjork-cube.jpg" width="600" height="388" alt="The Björk Cube app, a navigable hypercube of Magenta RealTime 2's style space" loading="lazy">
       </a>
       <a class="proj reveal" href="https://github.com/lucastsui/splat-room-edit" target="_blank" rel="noopener" aria-label="Splat Room-Edit, open GitHub repository">
         <span class="num">06</span>
@@ -441,11 +969,11 @@ div.proj{cursor:default}
           </div>
         </div>
         <div class="proj-duo">
-          <img src="/splat-before.jpg" width="169" height="300" alt="The captured room with a white wall" loading="lazy">
-          <img src="/splat-after.jpg" width="169" height="300" alt="The same room with the wall recolored sage" loading="lazy">
+          <img src="splat-before.jpg" width="169" height="300" alt="The captured room with a white wall" loading="lazy">
+          <img src="splat-after.jpg" width="169" height="300" alt="The same room with the wall recolored sage" loading="lazy">
         </div>
       </a>
-      <a class="proj reveal" href="https://github.com/lucastsui/collatz-research" target="_blank" rel="noopener" aria-label="Collatz Conjecture Research, open GitHub repository">
+      <a class="proj reveal" id="proj-collatz" href="https://github.com/lucastsui/collatz-research" target="_blank" rel="noopener" aria-label="Collatz Conjecture Research, open GitHub repository">
         <span class="num">07</span>
         <div>
           <h3>Collatz Conjecture Research</h3>
@@ -457,7 +985,7 @@ div.proj{cursor:default}
           </div>
         </div>
       </a>
-      <a class="proj reveal" href="https://github.com/lucastsui/socrates" target="_blank" rel="noopener" aria-label="Socrates, open GitHub repository">
+      <a class="proj reveal" id="proj-socrates" href="https://github.com/lucastsui/socrates" target="_blank" rel="noopener" aria-label="Socrates, open GitHub repository">
         <span class="num">08</span>
         <div>
           <h3>Socrates</h3>
@@ -469,7 +997,7 @@ div.proj{cursor:default}
             <span class="tag">HTML</span>
           </div>
         </div>
-        <img class="proj-thumb no-edge" src="/socrates-ascii.png" width="736" height="568" alt="ASCII portrait of Socrates" loading="lazy">
+        <img class="proj-thumb no-edge" src="socrates-ascii.png" width="736" height="568" alt="ASCII portrait of Socrates" loading="lazy">
       </a>
       <div class="proj reveal" id="proj-ai-jailbreaking-research">
         <span class="num">09</span>
@@ -481,7 +1009,7 @@ div.proj{cursor:default}
             <span class="tag">red team</span>
           </div>
         </div>
-        <img class="proj-thumb" src="/ai-jailbreaking-research.jpg" width="2559" height="1521" alt="AI Jailbreaking Research thumbnail" loading="lazy">
+        <img class="proj-thumb" src="ai-jailbreaking-research.jpg" width="2559" height="1521" alt="AI Jailbreaking Research thumbnail" loading="lazy">
       </div>
       <div class="proj reveal" id="proj-in-house-ai-deployment">
         <span class="num">10</span>
@@ -493,14 +1021,14 @@ div.proj{cursor:default}
             <span class="tag">Computer Network</span>
           </div>
         </div>
-        <img class="proj-thumb" src="/in-house-ai-deployment.jpg" width="1200" height="1600" alt="NVIDIA workstations used for in-house AI deployment" loading="lazy">
+        <img class="proj-thumb" src="in-house-ai-deployment.jpg" width="1200" height="1600" alt="NVIDIA workstations used for in-house AI deployment" loading="lazy">
       </div>
     </div>
   </section>
 </main>
 
 <footer class="site-foot wrap" id="contact">
-  <p class="foot-line">B.Sc. Applied Physics, Bachelor in Law, M.Sc Computer science candidate</p>
+  <p class="foot-line">B.Sc. Applied Physics, Bachelor in Law, M.Sc Computer Science candidate</p>
   <p class="foot-line">10+ years of experience in finance, data science, asset management.</p>
   <p class="foot-contact">
     <a href="https://github.com/lucastsui" target="_blank" rel="noopener">GitHub: <strong>@lucastsui</strong></a>
@@ -531,6 +1059,328 @@ div.proj{cursor:default}
   function onScroll(){header.classList.toggle('scrolled',window.scrollY>4);}
   onScroll();
   window.addEventListener('scroll',onScroll,{passive:true});
+
+
+  // Professional summary diagram: zoom + pan via SVG viewBox (crisp text; no CSS scale blur)
+  (function(){
+    var viewport=document.getElementById('proDiagramViewport');
+    var svg=viewport&&viewport.querySelector('svg.pro-diagram');
+    if(!viewport||!svg) return;
+
+    var BASE_W=1420, BASE_H=860;
+    var vx=0, vy=0, vw=BASE_W, vh=BASE_H;
+    var minScale=0.45, maxScale=5;
+    var dragging=false, lastX=0, lastY=0;
+    var pointers=new Map();
+    var pinchStartDist=0, pinchStartVw=BASE_W, pinchStartVh=BASE_H, pinchStartVx=0, pinchStartVy=0;
+
+    function scale(){ return BASE_W / vw; }
+    function apply(){
+      svg.setAttribute('viewBox', vx+' '+vy+' '+vw+' '+vh);
+    }
+    function clampVw(w){
+      var minW=BASE_W/maxScale, maxW=BASE_W/minScale;
+      return Math.min(maxW, Math.max(minW, w));
+    }
+    function clientToSvg(clientX, clientY){
+      var pt=svg.createSVGPoint();
+      pt.x=clientX; pt.y=clientY;
+      var ctm=svg.getScreenCTM();
+      if(!ctm) return {x:vx+vw/2, y:vy+vh/2};
+      return pt.matrixTransform(ctm.inverse());
+    }
+    function zoomAt(clientX, clientY, factor){
+      var p=clientToSvg(clientX, clientY);
+      var newVw=clampVw(vw/factor);
+      var newVh=newVw*(BASE_H/BASE_W);
+      // Keep the SVG point under the cursor fixed
+      vx=p.x-(p.x-vx)*(newVw/vw);
+      vy=p.y-(p.y-vy)*(newVh/vh);
+      vw=newVw; vh=newVh;
+      apply();
+    }
+    function panByPixels(dx, dy){
+      var rect=svg.getBoundingClientRect();
+      if(!rect.width||!rect.height) return;
+      vx-=dx*(vw/rect.width);
+      vy-=dy*(vh/rect.height);
+      apply();
+    }
+    function reset(){
+      vx=0; vy=0; vw=BASE_W; vh=BASE_H;
+      apply();
+    }
+
+    viewport.addEventListener('wheel', function(e){
+      e.preventDefault();
+      zoomAt(e.clientX, e.clientY, e.deltaY<0 ? 1.12 : 1/1.12);
+    }, {passive:false});
+
+    viewport.addEventListener('dblclick', function(e){
+      e.preventDefault();
+      reset();
+    });
+
+    viewport.addEventListener('pointerdown', function(e){
+      // Don't start pan when interacting with a project hotspot (allow click-through to card later)
+      if(window.__proDiagramHotTarget && window.__proDiagramHotTarget(e)){
+        return;
+      }
+      viewport.setPointerCapture(e.pointerId);
+      pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      if(pointers.size===1){
+        dragging=true;
+        lastX=e.clientX; lastY=e.clientY;
+        viewport.classList.add('is-panning');
+      }else if(pointers.size===2){
+        dragging=false;
+        var pts=Array.from(pointers.values());
+        var dx=pts[0].x-pts[1].x, dy=pts[0].y-pts[1].y;
+        pinchStartDist=Math.hypot(dx,dy)||1;
+        pinchStartVw=vw; pinchStartVh=vh;
+        pinchStartVx=vx; pinchStartVy=vy;
+      }
+    });
+
+    viewport.addEventListener('pointermove', function(e){
+      if(!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+      if(pointers.size===2){
+        var pts=Array.from(pointers.values());
+        var dx=pts[0].x-pts[1].x, dy=pts[0].y-pts[1].y;
+        var dist=Math.hypot(dx,dy)||1;
+        var midX=(pts[0].x+pts[1].x)/2;
+        var midY=(pts[0].y+pts[1].y)/2;
+        var factor=dist/pinchStartDist;
+        // reset to pinch start then zoom
+        vw=pinchStartVw; vh=pinchStartVh; vx=pinchStartVx; vy=pinchStartVy;
+        zoomAt(midX, midY, factor);
+        return;
+      }
+      if(!dragging) return;
+      var dx=e.clientX-lastX, dy=e.clientY-lastY;
+      lastX=e.clientX; lastY=e.clientY;
+      panByPixels(dx, dy);
+    });
+
+    function endPointer(e){
+      pointers.delete(e.pointerId);
+      if(pointers.size===0){
+        dragging=false;
+        viewport.classList.remove('is-panning');
+      }else if(pointers.size===1){
+        var only=pointers.values().next().value;
+        dragging=true;
+        lastX=only.x; lastY=only.y;
+        viewport.classList.add('is-panning');
+      }
+    }
+    viewport.addEventListener('pointerup', endPointer);
+    viewport.addEventListener('pointercancel', endPointer);
+    viewport.addEventListener('pointerleave', function(e){
+      if(pointers.has(e.pointerId)) endPointer(e);
+    });
+
+    document.querySelectorAll('[data-diagram-zoom]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var action=btn.getAttribute('data-diagram-zoom');
+        var rect=viewport.getBoundingClientRect();
+        var cx=rect.left+rect.width/2;
+        var cy=rect.top+rect.height/2;
+        if(action==='in') zoomAt(cx, cy, 1.2);
+        else if(action==='out') zoomAt(cx, cy, 1/1.2);
+        else reset();
+      });
+    });
+
+    apply();
+  })();
+
+
+  // Project hover cards: clone the real Projects-section cards
+  (function(){
+    var viewport=document.getElementById('proDiagramViewport');
+    var svg=viewport&&viewport.querySelector('svg.pro-diagram');
+    var shell=document.querySelector('.pro-diagram-shell');
+    var card=document.getElementById('proProjectCard');
+    if(!viewport||!svg||!card||!shell) return;
+
+    // data-project id → Projects section element id
+    var PROJECT_ANCHORS={
+      'model-soup':'proj-model-soup',
+      'factory':'proj-self-improving-factory',
+      'carruthers':'proj-carruthers',
+      'autonomous':'proj-autonomous-asset',
+      'bjork':'proj-bjork-cube',
+      'collatz':'proj-collatz',
+      'socrates':'proj-socrates',
+      'in-house':'proj-in-house-ai-deployment'
+    };
+
+    var hideTimer=null;
+    var activeId=null;
+
+    function scrollToProject(id){
+      var anchor=PROJECT_ANCHORS[id];
+      if(!anchor) return;
+      var el=document.getElementById(anchor);
+      if(!el) return;
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+      el.classList.add('proj-flash');
+      setTimeout(function(){ el.classList.remove('proj-flash'); }, 1600);
+    }
+
+    function showCard(id, clientX, clientY){
+      var anchor=PROJECT_ANCHORS[id];
+      var source=anchor&&document.getElementById(anchor);
+      if(!source) return;
+      activeId=id;
+      if(hideTimer){ clearTimeout(hideTimer); hideTimer=null; }
+
+      // Direct clone of the Projects-section card (thumbnail, copy, tags, etc.)
+      var clone=source.cloneNode(true);
+      clone.removeAttribute('id');
+      clone.classList.remove('reveal','in','proj-flash');
+      clone.setAttribute('tabindex','-1');
+      // Keep as non-navigating preview; click scrolls to full card
+      if(clone.tagName==='A'){
+        clone.removeAttribute('href');
+        clone.removeAttribute('target');
+        clone.removeAttribute('rel');
+        clone.setAttribute('role','button');
+      }
+      // Neutralize nested links so they don't leave the page before scroll
+      Array.prototype.forEach.call(clone.querySelectorAll('a[href]'), function(a){
+        a.addEventListener('click', function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          scrollToProject(id);
+        });
+      });
+
+      // Keep only the first sentence of project description(s)
+      var descs=clone.querySelectorAll('.desc');
+      if(descs.length){
+        var raw=descs[0].textContent.replace(/\s+/g,' ').trim();
+        // First sentence: through first . ! or ? (or full text if none)
+        var m=raw.match(/^.*?[.!?](?=\s|$)/);
+        var first=m?m[0].trim():raw;
+        descs[0].textContent=first;
+        for(var di=1;di<descs.length;di++){
+          descs[di].parentNode.removeChild(descs[di]);
+        }
+      }
+
+      card.innerHTML='';
+      card.appendChild(clone);
+      card.hidden=false;
+      card.setAttribute('aria-hidden','false');
+      card.classList.add('is-open');
+
+      var shellRect=shell.getBoundingClientRect();
+      var cardW=card.offsetWidth||360;
+      var cardH=card.offsetHeight||200;
+      var x=clientX-shellRect.left+14;
+      var y=clientY-shellRect.top+14;
+      if(x+cardW>shellRect.width-8) x=clientX-shellRect.left-cardW-14;
+      if(y+cardH>shellRect.height-8) y=clientY-shellRect.top-cardH-14;
+      x=Math.max(8, Math.min(x, shellRect.width-cardW-8));
+      y=Math.max(8, Math.min(y, shellRect.height-cardH-8));
+      card.style.left=x+'px';
+      card.style.top=y+'px';
+    }
+
+    function scheduleHide(){
+      if(hideTimer) clearTimeout(hideTimer);
+      hideTimer=setTimeout(function(){
+        activeId=null;
+        card.classList.remove('is-open');
+        card.setAttribute('aria-hidden','true');
+        card.hidden=true;
+        card.innerHTML='';
+      }, 140);
+    }
+
+    function clientToSvg(clientX, clientY){
+      var pt=svg.createSVGPoint();
+      pt.x=clientX; pt.y=clientY;
+      var ctm=svg.getScreenCTM();
+      if(!ctm) return null;
+      return pt.matrixTransform(ctm.inverse());
+    }
+
+    function hotFromEvent(e){
+      var p=clientToSvg(e.clientX, e.clientY);
+      if(!p) return null;
+      var hots=svg.querySelectorAll('rect[data-project]');
+      for(var i=0;i<hots.length;i++){
+        var r=hots[i];
+        var x=parseFloat(r.getAttribute('x'),10);
+        var y=parseFloat(r.getAttribute('y'),10);
+        var w=parseFloat(r.getAttribute('width'),10);
+        var h=parseFloat(r.getAttribute('height'),10);
+        if(p.x>=x && p.x<=x+w && p.y>=y && p.y<=y+h) return r;
+      }
+      return null;
+    }
+
+    window.__proDiagramHotTarget=function(e){ return hotFromEvent(e); };
+
+    viewport.addEventListener('pointermove', function(e){
+      if(e.buttons) return;
+      var hot=hotFromEvent(e);
+      if(hot){
+        var id=hot.getAttribute('data-project');
+        document.querySelectorAll('.pro-diagram rect.d-hot').forEach(function(r){ r.classList.toggle('is-hover', r===hot); });
+        // Avoid re-cloning every pixel move for the same project
+        if(activeId!==id || !card.classList.contains('is-open')){
+          showCard(id, e.clientX, e.clientY);
+        }else{
+          // still follow cursor lightly
+          var shellRect=shell.getBoundingClientRect();
+          var cardW=card.offsetWidth||360;
+          var cardH=card.offsetHeight||200;
+          var x=e.clientX-shellRect.left+14;
+          var y=e.clientY-shellRect.top+14;
+          if(x+cardW>shellRect.width-8) x=e.clientX-shellRect.left-cardW-14;
+          if(y+cardH>shellRect.height-8) y=e.clientY-shellRect.top-cardH-14;
+          x=Math.max(8, Math.min(x, shellRect.width-cardW-8));
+          y=Math.max(8, Math.min(y, shellRect.height-cardH-8));
+          card.style.left=x+'px';
+          card.style.top=y+'px';
+        }
+      }else if(!card.matches(':hover')){
+        document.querySelectorAll('.pro-diagram rect.d-hot.is-hover').forEach(function(r){ r.classList.remove('is-hover'); });
+        scheduleHide();
+      }
+    });
+    viewport.addEventListener('pointerleave', function(e){
+      var rel=e.relatedTarget;
+      if(rel && (card===rel || card.contains(rel))) return;
+      if(!card.matches(':hover')) scheduleHide();
+      document.querySelectorAll('.pro-diagram rect.d-hot.is-hover').forEach(function(r){ r.classList.remove('is-hover'); });
+    });
+    card.addEventListener('pointerenter', function(){
+      if(hideTimer){ clearTimeout(hideTimer); hideTimer=null; }
+    });
+    card.addEventListener('pointerleave', scheduleHide);
+
+    // Click grey box → scroll to full project card
+    viewport.addEventListener('click', function(e){
+      var hot=hotFromEvent(e);
+      if(!hot) return;
+      e.preventDefault();
+      e.stopPropagation();
+      scrollToProject(hot.getAttribute('data-project'));
+    });
+
+    // Click the floating project card → scroll to full project card
+    card.addEventListener('click', function(e){
+      if(!activeId) return;
+      e.preventDefault();
+      scrollToProject(activeId);
+    });
+  })();
 
   // Scroll reveal
   var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
