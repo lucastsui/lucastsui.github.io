@@ -671,7 +671,7 @@ div.proj{cursor:default}
       
       <div class="pro-project-card" id="proProjectCard" role="dialog" aria-hidden="true" hidden></div>
 
-      <div class="pro-diagram-wrap" id="proDiagramViewport" role="img" aria-label="Diagram from education and philosophy through two solution paths to applications including AYQ, Model Soup, LLM systems, and related research. Zoom and pan enabled.">
+      <div class="pro-diagram-wrap" id="proDiagramViewport" role="img" aria-label="Diagram from education and philosophy through two solution paths to applications including AYQ, Model Soup, Socrates, Microbait, LLM systems, and related research. Zoom and pan enabled.">
         <!-- Ruler: left ledge fixed in X; segment Y tracks diagram pan/zoom; labels never squeezed -->
         <div class="pro-diagram-ruler" id="proDiagramRuler" aria-hidden="true">
           <div class="pro-rail-seg" data-y0="36" data-y1="170">
@@ -688,7 +688,7 @@ div.proj{cursor:default}
           </div>
         </div>
         <div class="pro-diagram-stage" id="proDiagramStage">
-      <svg class="pro-diagram" viewBox="0 0 1420 860" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg class="pro-diagram" viewBox="0 0 1640 860" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 
       <defs>
         <marker id="pro-arrow" viewBox="0 0 10 10" refX="9" refY="5"
@@ -878,6 +878,14 @@ div.proj{cursor:default}
       <text x="1280" y="630" text-anchor="middle" font-size="12">
         <tspan x="1280" dy="0">Socrates Self Learning</tspan>
         <tspan x="1280" dy="14">System</tspan>
+      </text>
+
+      <!-- Improve Human Intelligence → Microbait (right of Socrates) -->
+      <path d="M1100 574 V592 H1500 V608" fill="none" stroke="currentColor" class="d-mid" marker-end="url(#pro-arrow)" />
+      <rect x="1400" y="610" width="200" height="52" rx="2" fill="none" stroke="currentColor" class="d-ink d-fill-soft d-hot" data-project="microbait"/>
+      <text x="1500" y="630" text-anchor="middle" font-size="12">
+        <tspan x="1500" dy="0">Microbait</tspan>
+        <tspan x="1500" dy="14">Job Market Research</tspan>
       </text>
 
       <!-- Child row y=698 -->
@@ -1157,7 +1165,7 @@ div.proj{cursor:default}
     var railSegs=ruler?Array.prototype.slice.call(ruler.querySelectorAll('.pro-rail-seg')):[];
     if(!viewport||!svg) return;
 
-    var BASE_W=1420, BASE_H=860;
+    var BASE_W=1640, BASE_H=860;
     var vx=0, vy=0, vw=BASE_W, vh=BASE_H;
     var minScale=0.45, maxScale=5;
     var dragging=false, lastX=0, lastY=0;
@@ -1341,7 +1349,8 @@ div.proj{cursor:default}
       'bjork':'proj-bjork-cube',
       'collatz':'proj-collatz',
       'socrates':'proj-socrates',
-      'in-house':'proj-in-house-ai-deployment'
+      'in-house':'proj-in-house-ai-deployment',
+      'microbait':'proj-microbait'
     };
 
     var hideTimer=null;
