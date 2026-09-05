@@ -372,9 +372,12 @@ div.proj{cursor:default}
         <span class="num">02</span>
         <div>
           <h3>Self-Improving Factory</h3>
-          <p class="desc">I make self-expanding and self-improving simulated factories.</p>
-          <p class="desc">Approach one is to encode design knowledge into the architecture so that the factory can scale indefinitely without exploding in complexity. The results are in <a href="https://github.com/lucastsui/RINA-Recursive-Factory" target="_blank" rel="noopener">github.com/lucastsui/RINA-Recursive-Factory</a>.</p>
-          <p class="desc">Approach two is to use AI to explore the world and research optimizations autonomously. The project is ongoing. It currently has around 120 types of intermediate products and around 1M moving intermediate products on average. Current layout of the factory: <a href="https://claude.ai/code/artifact/31ded7f0-a54f-4c12-9627-ff794e5c9f97?org=78cee566-b0ef-4e05-b28b-ced933b39a88" target="_blank" rel="noopener">claude.ai layout artifact</a>.</p>
+          <p class="desc">Factorio is a factory automation game with &gt;= 1M moving parts that gradually became my obsession. There is an underground competition where players try to making the biggest factory possible under the hardware constraints. As a die-hard fan of the game, whenever there is a new automation technology, I would try to throw it at the game and see how large of a factory I can make.</p>
+          <p class="desc">I have tried to apply an research networking architecture called Recursive Ineternetwork Architecture (RINA) and use Claude to design the optimal factory top-down. <a href="https://github.com/lucastsui/RINA-Recursive-Factory" target="_blank" rel="noopener">github.com/lucastsui/RINA-Recursive-Factory</a>. The schematics work but the design is not space efficient, and it can't solve some minor but crucial nuances that are needed to make the design applicable in the in-game client.</p>
+          <p class="desc">After GPT Astra came out, I abandoned of notion of a perfect design and mimic the approach GPT used to hack Hugging Face by creating multiple agents, each with limited vision but they can move around the factory and communicate through the in-game chat box.</p>
+          <p class="desc">The "community" approach is more promising. The top-down approach took about 1 month to complete the design, while the agent swarm took only one day to make substantially progress which would take non professional players weeks to achieve.</p>
+          <p class="desc">My theory is that the top-down "galaxy brain" sees the game as a sea of game logs, while the Astra agents, actually interact with the in-game client using in-game controls. The abstractions they form over the game are different, and my intuition gained from my study in computer networks told me that selecting the right abstraction is half of the solution.</p>
+          <p class="desc">The experiment is ongoing.</p>
           <div class="tags" aria-label="Tags">
             <span class="tag">computer network</span>
             <span class="tag">distributive system</span>
