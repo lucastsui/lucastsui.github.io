@@ -123,7 +123,9 @@ div.proj{cursor:default}
   line-height:1.2;
   white-space:nowrap;
 }
+.proj-media{align-self:stretch;justify-self:end}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
+.proj-media .proj-thumb{position:sticky;top:72px}
 .proj:hover .proj-thumb{border-color:var(--accent)}
 .proj-thumb.no-edge{border:none;background:transparent}
 /* Keep animated thumbs compact so large source GIFs don't inflate the card */
@@ -290,6 +292,7 @@ div.proj{cursor:default}
   .sec-head{flex-direction:column;align-items:flex-start;gap:10px}
   .proj{grid-template-columns:2.2rem minmax(0,1fr)}
   .proj .tags{grid-column:1/-1;text-align:left;margin-top:.7em}
+  .proj-media{grid-column:1/-1;justify-self:start;margin-top:.9em}
   .proj-thumb{grid-column:1/-1;width:clamp(180px,55vw,260px);margin-top:.9em}
   .proj-thumb.is-gif{max-height:150px}
   .proj-duo{grid-column:1/-1;margin-top:.9em}
@@ -386,7 +389,9 @@ div.proj{cursor:default}
             <span class="tag">Lua</span>
           </div>
         </div>
-        <img class="proj-thumb" src="self-improving-factory.png" width="2606" height="1628" alt="Self-Improving Factory layout snapshot" loading="lazy">
+        <div class="proj-media">
+          <img class="proj-thumb" src="self-improving-factory.png" width="2606" height="1628" alt="Self-Improving Factory layout snapshot" loading="lazy">
+        </div>
       </div>
       <div class="proj reveal" id="proj-carruthers">
         <span class="num">03</span>
