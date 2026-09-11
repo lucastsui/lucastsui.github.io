@@ -133,7 +133,9 @@ div.proj{cursor:default}
 .factory-chat figcaption{margin-top:8px;font-size:11px;line-height:1.5;color:var(--muted)}
 .factory-preview .proj-thumb{position:static;width:100%}
 .factory-preview-label{display:block;margin-top:8px;font-size:11px;color:var(--muted)}
-.factory-preview:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+.carruthers-video{display:block;align-self:start;justify-self:end;width:clamp(150px,20vw,210px)}
+.carruthers-video .proj-thumb{width:100%}
+.carruthers-video:focus-visible,.factory-preview:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .proj:hover .proj-thumb{border-color:var(--accent)}
 .proj-thumb.no-edge{border:none;background:transparent}
 /* Keep animated thumbs compact so large source GIFs don't inflate the card */
@@ -302,6 +304,7 @@ div.proj{cursor:default}
   .proj .tags{grid-column:1/-1;text-align:left;margin-top:.7em}
   .proj-media{grid-column:1/-1;justify-self:start;margin-top:.9em}
   .factory-gallery{position:static;width:clamp(180px,55vw,260px)}
+  .carruthers-video{grid-column:1/-1;justify-self:start;width:clamp(180px,55vw,260px);margin-top:.9em}
   .proj-thumb{grid-column:1/-1;width:clamp(180px,55vw,260px);margin-top:.9em}
   .proj-thumb.is-gif{max-height:150px}
   .proj-duo{grid-column:1/-1;margin-top:.9em}
@@ -426,6 +429,10 @@ div.proj{cursor:default}
             <span class="tag">Python</span>
           </div>
         </div>
+        <a class="carruthers-video" href="https://www.youtube.com/watch?v=X7jDEOemN-o" target="_blank" rel="noopener noreferrer" aria-label="Watch the Carruthers demonstration on YouTube (opens in a new tab)">
+          <img class="proj-thumb" src="carruthers-video.jpg" width="480" height="360" alt="Carruthers demonstration video thumbnail" loading="lazy">
+          <span class="factory-preview-label">Watch demonstration ↗</span>
+        </a>
       </div>
       <div class="proj reveal" id="proj-autonomous-asset">
         <span class="num">04</span>
