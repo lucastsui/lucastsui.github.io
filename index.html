@@ -126,6 +126,10 @@ div.proj{cursor:default}
 .proj-media{align-self:stretch;justify-self:end}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj-media .proj-thumb{position:sticky;top:72px}
+.factory-preview{display:block;position:sticky;top:72px;width:clamp(150px,20vw,210px)}
+.factory-preview .proj-thumb{position:static;width:100%}
+.factory-preview-label{display:block;margin-top:8px;font-size:11px;color:var(--muted)}
+.factory-preview:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .proj:hover .proj-thumb{border-color:var(--accent)}
 .proj-thumb.no-edge{border:none;background:transparent}
 /* Keep animated thumbs compact so large source GIFs don't inflate the card */
@@ -293,6 +297,7 @@ div.proj{cursor:default}
   .proj{grid-template-columns:2.2rem minmax(0,1fr)}
   .proj .tags{grid-column:1/-1;text-align:left;margin-top:.7em}
   .proj-media{grid-column:1/-1;justify-self:start;margin-top:.9em}
+  .factory-preview{position:static;width:clamp(180px,55vw,260px)}
   .proj-thumb{grid-column:1/-1;width:clamp(180px,55vw,260px);margin-top:.9em}
   .proj-thumb.is-gif{max-height:150px}
   .proj-duo{grid-column:1/-1;margin-top:.9em}
@@ -390,7 +395,10 @@ div.proj{cursor:default}
           </div>
         </div>
         <div class="proj-media">
-          <img class="proj-thumb" src="self-improving-factory.png" width="2606" height="1628" alt="Self-Improving Factory layout snapshot" loading="lazy">
+          <a class="factory-preview" href="https://claude.ai/code/artifact/31ded7f0-a54f-4c12-9627-ff794e5c9f97?org=78cee566-b0ef-4e05-b28b-ced933b39a88" target="_blank" rel="noopener noreferrer" aria-label="Explore Self-Improving Factory interactive map on Claude (opens in a new tab)">
+            <img class="proj-thumb" src="self-improving-factory-artifact.png" width="1141" height="600" alt="10k SPM Factory Deep Map showing the factory production layout" loading="lazy">
+            <span class="factory-preview-label">Explore interactive map ↗</span>
+          </a>
         </div>
       </div>
       <div class="proj reveal" id="proj-carruthers">
