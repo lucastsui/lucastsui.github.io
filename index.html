@@ -124,6 +124,8 @@ div.proj{cursor:default}
   white-space:nowrap;
 }
 .proj-media{align-self:stretch;justify-self:end}
+.fly-preview{align-self:start;cursor:zoom-in}
+.fly-preview:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj-media .proj-thumb{position:sticky;top:72px}
 .factory-gallery{position:sticky;top:72px;width:clamp(150px,20vw,210px)}
@@ -382,7 +384,9 @@ div.proj{cursor:default}
             <span class="tag">server deployment</span>
           </div>
         </div>
-        <img class="proj-thumb is-gif" src="fly-swarm-demo.gif" width="2546" height="1344" alt="Simulated fly brain controlling cargo delivery along an assembly line, with live neural activity and production progress" loading="lazy">
+        <a class="proj-media fly-preview" href="fly-swarm-demo.gif" target="_blank" rel="noopener" aria-label="Enlarge Fly simulation animated GIF (opens in a new tab)">
+          <img class="proj-thumb is-gif" src="fly-swarm-demo.gif" width="2546" height="1344" alt="Simulated fly brain controlling cargo delivery along an assembly line, with live neural activity and production progress" loading="lazy">
+        </a>
       </div>
       <a class="proj reveal" id="proj-model-soup" href="https://github.com/lucastsui/ModelSoup" target="_blank" rel="noopener" aria-label="Model Soup, open GitHub repository">
         <span class="num">02</span>
