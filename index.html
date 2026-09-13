@@ -124,10 +124,12 @@ div.proj{cursor:default}
   white-space:nowrap;
 }
 .proj-media{align-self:stretch;justify-self:end}
-.fly-preview{align-self:start;cursor:zoom-in}
+.fly-preview{align-self:start;cursor:zoom-in;width:clamp(150px,20vw,210px);text-decoration:none}
+.fly-preview-caption{display:block;margin-top:8px;font-size:11px;line-height:1.5;color:var(--muted)}
 .fly-preview:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj-media .proj-thumb{position:sticky;top:72px}
+.fly-preview .proj-thumb{position:static}
 .factory-gallery{position:sticky;top:72px;width:clamp(150px,20vw,210px)}
 .factory-preview{display:block;width:100%}
 .factory-gallery .proj-thumb{position:static;width:100%}
@@ -386,6 +388,7 @@ div.proj{cursor:default}
         </div>
         <a class="proj-media fly-preview" href="fly-swarm-demo.gif" target="_blank" rel="noopener" aria-label="Enlarge Fly simulation animated GIF (opens in a new tab)">
           <img class="proj-thumb is-gif" src="fly-swarm-demo.gif" width="2546" height="1344" alt="Simulated fly brain controlling cargo delivery along an assembly line, with live neural activity and production progress" loading="lazy">
+          <span class="fly-preview-caption">Live demo of a simulated fruit fly brain servicing a multi-step assembly line. Click to enlarge.</span>
         </a>
       </div>
       <a class="proj reveal" id="proj-model-soup" href="https://github.com/lucastsui/ModelSoup" target="_blank" rel="noopener" aria-label="Model Soup, open GitHub repository">
