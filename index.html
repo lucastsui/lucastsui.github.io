@@ -371,15 +371,15 @@ div.proj{cursor:default}
       <div class="proj reveal" id="proj-fly-swarm-laboratory">
         <span class="num">01</span>
         <div>
-          <h3>Fly Swarm Laboratory</h3>
+          <h3>Using Simulated Fruit Flies to discover Optimal Routes in Logistic Networks (WIP)</h3>
           <p class="desc">Using simulated fly brains to find optimal routes in logistics networks.</p>
           <p class="desc">Google released a complete map of a fruit fly's brain. I am training a simulated version of the brain to haul cargo along a linear assembly line involving multiple types of intermediate products at successive stages.</p>
           <p class="desc">The design challenge is how to train a brain adapted to the real world to operate in a 2D environment. Simply adding a decoder network to translate its motor neuron signals into up, down, left, and right controls has been ineffective. Whether dopamine-based rewards are more effective than backpropagation remains an open question.</p>
+          <p class="desc">I used a cluster of 1 RTX 5090 and 2 DGX Sparks for training by using Nvidia PAIR, a computer clustering tool. AI has made the hardware communication part of the problem trivial.</p>
           <p class="desc">The current direction is to use AI to monitor training progress and adjust the training autonomously until the fly can service the entire assembly line and deliver finished products. I then plan to add more flies and introduce more complex factory layouts to test whether the swarm can serve as a route discovery tool.</p>
           <div class="tags" aria-label="Tags">
-            <span class="tag">connectome simulation</span>
-            <span class="tag">swarm intelligence</span>
-            <span class="tag">route discovery</span>
+            <span class="tag">machine learning</span>
+            <span class="tag">server deployment</span>
           </div>
         </div>
       </div>
@@ -618,5 +618,4 @@ div.proj{cursor:default}
 </script>
 </body>
 </html>
-
 
