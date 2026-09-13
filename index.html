@@ -368,8 +368,23 @@ div.proj{cursor:default}
     </div>
 
     <div class="proj-list">
-      <a class="proj reveal" id="proj-model-soup" href="https://github.com/lucastsui/ModelSoup" target="_blank" rel="noopener" aria-label="Model Soup, open GitHub repository">
+      <div class="proj reveal" id="proj-fly-swarm-laboratory">
         <span class="num">01</span>
+        <div>
+          <h3>Fly Swarm Laboratory</h3>
+          <p class="desc">Using simulated fly brains to find optimal routes in logistics networks.</p>
+          <p class="desc">Google released a complete map of a fruit fly's brain. I am training a simulated version of the brain to haul cargo along a linear assembly line involving multiple types of intermediate products at successive stages.</p>
+          <p class="desc">The design challenge is how to train a brain adapted to the real world to operate in a 2D environment. Simply adding a decoder network to translate its motor neuron signals into up, down, left, and right controls has been ineffective. Whether dopamine-based rewards are more effective than backpropagation remains an open question.</p>
+          <p class="desc">The current direction is to use AI to monitor training progress and adjust the training autonomously until the fly can service the entire assembly line and deliver finished products. I then plan to add more flies and introduce more complex factory layouts to test whether the swarm can serve as a route discovery tool.</p>
+          <div class="tags" aria-label="Tags">
+            <span class="tag">connectome simulation</span>
+            <span class="tag">swarm intelligence</span>
+            <span class="tag">route discovery</span>
+          </div>
+        </div>
+      </div>
+      <a class="proj reveal" id="proj-model-soup" href="https://github.com/lucastsui/ModelSoup" target="_blank" rel="noopener" aria-label="Model Soup, open GitHub repository">
+        <span class="num">02</span>
         <div>
           <h3>Model Soup</h3>
           <p class="desc">An evolutionary framework that automates hypothesis generation, mutation, and verification. LLMs propose executable prediction models into dual pools (parameter-based and neural), which compete under a falsifiable cross-validated score and recombine across generations.</p>
@@ -384,7 +399,7 @@ div.proj{cursor:default}
         <img class="proj-thumb is-gif" src="model-soup-demo.gif" width="420" height="263" alt="Model Soup evolution demo: scores rising across generations" loading="lazy">
       </a>
       <div class="proj reveal" id="proj-self-improving-factory">
-        <span class="num">02</span>
+        <span class="num">03</span>
         <div>
           <h3>Self-Improving Factory</h3>
           <p class="desc">Factorio is a factory automation game with &gt;= 1M moving parts that gradually became my obsession. There is an underground competition where players try to making the biggest factory possible under the hardware constraints. As a die-hard fan of the game, whenever there is a new automation technology, I would try to throw it at the game and see how large of a factory I can make.</p>
@@ -417,7 +432,7 @@ div.proj{cursor:default}
         </div>
       </div>
       <div class="proj reveal" id="proj-carruthers">
-        <span class="num">03</span>
+        <span class="num">04</span>
         <div>
           <h3>Carruthers</h3>
           <p class="desc">I join the Carruthers Geocorona Imager mission of NASA to set up data pipeline with physical server deployment and monitoring involved. My role is to make trade-off between data storage and computation efficiency and help scientists quickly form intuition over observational data.</p>
@@ -434,7 +449,7 @@ div.proj{cursor:default}
         </a>
       </div>
       <div class="proj reveal" id="proj-autonomous-asset">
-        <span class="num">04</span>
+        <span class="num">05</span>
         <div>
           <h3>Autonomous Asset Allocation</h3>
           <p class="desc">By deploying in-house AI, I experiment with transforming a real estate management company into a portfolio management company, evaluate asset quality, and make buy/sell/hold decisions. Current effort is in devising rules that survive long feedback loops with noisy market signals.</p>
@@ -447,7 +462,7 @@ div.proj{cursor:default}
         </div>
       </div>
       <a class="proj reveal" id="proj-bjork-cube" href="https://github.com/lucastsui/bjork-cube" target="_blank" rel="noopener" aria-label="Björk Cube, open GitHub repository">
-        <span class="num">05</span>
+        <span class="num">06</span>
         <div>
           <h3>Björk Cube</h3>
           <p class="desc">A hackathon experiment to use social-media methods to understand the internal space of Magenta RealTime 2, a music generation model created by Google.</p>
@@ -462,7 +477,7 @@ div.proj{cursor:default}
         <img class="proj-thumb" src="bjork-cube.jpg" width="600" height="388" alt="The Björk Cube app, a navigable hypercube of Magenta RealTime 2's style space" loading="lazy">
       </a>
       <a class="proj reveal" href="https://github.com/lucastsui/splat-room-edit" target="_blank" rel="noopener" aria-label="Splat Room-Edit, open GitHub repository">
-        <span class="num">06</span>
+        <span class="num">07</span>
         <div>
           <h3>Splat Room-Edit</h3>
           <p class="desc">An experiment that turns a 20-second phone video of a room into a 3D Gaussian splat you can walk through in a browser, then recolors just the wall with one command while the art and furniture stay untouched.</p>
@@ -479,7 +494,7 @@ div.proj{cursor:default}
         </div>
       </a>
       <a class="proj reveal" id="proj-collatz" href="https://github.com/lucastsui/collatz-research" target="_blank" rel="noopener" aria-label="Collatz Conjecture Research, open GitHub repository">
-        <span class="num">07</span>
+        <span class="num">08</span>
         <div>
           <h3>Collatz Conjecture Research</h3>
           <p class="desc">An autonomous AI research loop that systematically attacks the Collatz conjecture: predict before computing, hunt for surprises, adversarially attack emerging patterns, and ban approaches that circle known dead ends. <span class="proj-link">github.com/lucastsui/collatz-research</span></p>
@@ -491,7 +506,7 @@ div.proj{cursor:default}
         </div>
       </a>
       <a class="proj reveal" id="proj-socrates" href="https://github.com/lucastsui/socrates" target="_blank" rel="noopener" aria-label="Socrates, open GitHub repository">
-        <span class="num">08</span>
+        <span class="num">09</span>
         <div>
           <h3>Socrates</h3>
           <p class="desc">This is an application to accelerate learning compared to passive lectures and brute-force recall practice by implementing pedagogic theories such as ZPD-based question targeting, cognitive load theory, the Socratic method, and related ideas. It progressively trains a student's knowledge-recall capability by tracking their mastery of a subject and asking questions appropriate for their level of understanding. A knowledge graph is generated dynamically to trace the background knowledge necessary to master a concept. <span class="proj-link">github.com/lucastsui/socrates</span></p>
@@ -505,7 +520,7 @@ div.proj{cursor:default}
         <img class="proj-thumb no-edge" src="socrates-ascii.png" width="736" height="568" alt="ASCII portrait of Socrates" loading="lazy">
       </a>
       <div class="proj reveal" id="proj-ai-jailbreaking-research">
-        <span class="num">09</span>
+        <span class="num">10</span>
         <div>
           <h3>AI Jailbreaking Research [Close Source]</h3>
           <p class="desc">An AI security research project that successfully prompts a frontier AI (Grok) to hack a video game with kernel-level anti-cheating protection. Methods could be disclosed for security research purposes.</p>
@@ -517,7 +532,7 @@ div.proj{cursor:default}
         <img class="proj-thumb" src="ai-jailbreaking-research.jpg" width="2559" height="1521" alt="AI Jailbreaking Research thumbnail" loading="lazy">
       </div>
       <div class="proj reveal" id="proj-in-house-ai-deployment">
-        <span class="num">10</span>
+        <span class="num">11</span>
         <div>
           <h3>In-house AI Deployment &amp; Ops</h3>
           <p class="desc">I AI-ify my company AYQ's information process by building an in-house AI system, solving challenges like model selection, evaluation, deployment, choosing the tradeoff between intelligence and context window, tools and skills settings, adopting prompt engineering architectures such as ARCHON to enhance performance of open weight models to be on par with frontier models.</p>
@@ -534,7 +549,7 @@ div.proj{cursor:default}
         <img class="proj-thumb" src="in-house-ai-deployment.jpg" width="1200" height="1600" alt="NVIDIA workstations used for in-house AI deployment" loading="lazy">
       </div>
       <a class="proj reveal" id="proj-microbait" href="https://github.com/lucastsui/microbait" target="_blank" rel="noopener" aria-label="Microbait, open GitHub repository">
-        <span class="num">11</span>
+        <span class="num">12</span>
         <div>
           <h3>Microbait</h3>
           <p class="desc">Microbait helps jobseekers survive AI job-pocalyse by identifying what skills are made obsolete because of AI, and what skills become more demanded as a result.</p>
