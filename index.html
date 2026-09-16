@@ -129,7 +129,7 @@ div.proj{cursor:default}
 .fly-preview:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .proj-thumb{width:clamp(150px,20vw,210px);height:auto;display:block;align-self:start;border:1px solid var(--line);transition:border-color .25s ease}
 .proj-media .proj-thumb{position:sticky;top:72px}
-.fly-preview .proj-thumb{position:static}
+.fly-preview .proj-thumb.is-gif{position:static;max-height:none}
 .factory-gallery{position:sticky;top:72px;width:clamp(150px,20vw,210px)}
 .factory-preview{display:block;width:100%}
 .factory-gallery .proj-thumb{position:static;width:100%}
@@ -386,8 +386,8 @@ div.proj{cursor:default}
             <span class="tag">server deployment</span>
           </div>
         </div>
-        <a class="proj-media fly-preview" href="fly-swarm-demo.gif" target="_blank" rel="noopener" aria-label="Enlarge Fly simulation animated GIF (opens in a new tab)">
-          <img class="proj-thumb is-gif" src="fly-swarm-demo.gif" width="2546" height="1344" alt="Simulated fly brain controlling cargo delivery along an assembly line, with live neural activity and production progress" loading="lazy">
+        <a class="proj-media fly-preview" href="fly-swarm-demo.gif?v=20260915" target="_blank" rel="noopener" aria-label="Enlarge Fly simulation animated GIF (opens in a new tab)">
+          <img class="proj-thumb is-gif" src="fly-swarm-demo.gif?v=20260915" width="800" height="536" alt="Simulated fly brain controlling cargo delivery along an assembly line, with live neural activity and production progress" loading="lazy">
           <span class="fly-preview-caption">Live demo of a simulated fruit fly brain servicing a multi-step assembly line. Click to enlarge.</span>
         </a>
       </div>
