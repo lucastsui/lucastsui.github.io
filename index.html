@@ -380,6 +380,7 @@ div.proj{cursor:default}
           <p class="desc">Google released a complete map of a fruit fly's brain. I trained a simulated version of the brain to haul cargo across a logistic network involving multiple types of intermediate products at successive stages.</p>
           <p class="desc">The design challenge is how to train a brain adapted to the real world to operate in a 2D environment. Simply adding a decoder network to translate its motor neuron signals into up, down, left, and right controls has been ineffective. <s>Whether dopamine-based rewards are more effective than backpropagation remains an open question.</s> A combination of movement-specific training and training for overall goal satisfaction, using traditional backpropagation without dopamine-based rewards, has proved effective.</p>
           <p class="desc">I used a cluster of 1 RTX 5090 and 2 DGX Sparks for training by using Nvidia PAIR, a computer clustering tool. AI has made the hardware communication part of the problem trivial.</p>
+          <p class="desc">After two days of training and experimenting with different combinations of training objectives (specific skills, such as picking up cargo, versus completing the whole job), the swarm can service a logistic network with an arbitrary layout, but its performance still varies depending on the topology.</p>
           <div class="tags" aria-label="Tags">
             <span class="tag">machine learning</span>
             <span class="tag">server deployment</span>
