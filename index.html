@@ -408,7 +408,7 @@ body.video-dialog-open{overflow:hidden}
               <img class="proj-thumb" src="carruthers-video.jpg?v=1UTmRQeXuAE" width="1280" height="720" alt="CEDA demonstration video thumbnail" loading="lazy">
               <span class="factory-preview-label">Watch demonstration ↗</span>
             </a>
-            <a class="carruthers-video" id="ceda-exosphere-preview" href="https://www.youtube.com/watch?v=ZHHejoeKQ7I" aria-label="Play CEDA kinetic exosphere simulation" aria-haspopup="dialog" aria-controls="ceda-video-dialog">
+            <a class="carruthers-video" id="ceda-exosphere-preview" href="https://www.youtube.com/watch?v=qAPskHcYCXE" aria-label="Play CEDA kinetic exosphere simulation" aria-haspopup="dialog" aria-controls="ceda-video-dialog">
               <span class="video-preview-image">
                 <img class="proj-thumb is-gif" src="ceda-exosphere-0-14s.gif" width="640" height="401" alt="Animated preview of the CEDA kinetic exosphere simulation around Earth" loading="lazy">
                 <span class="video-preview-play" aria-hidden="true"></span>
@@ -620,7 +620,7 @@ body.video-dialog-open{overflow:hidden}
     <button class="video-dialog-close" type="button" aria-label="Close video" autofocus>✕</button>
   </div>
   <iframe title="CEDA kinetic exosphere simulation on YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  <p class="video-dialog-fallback"><a href="https://www.youtube.com/watch?v=ZHHejoeKQ7I" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></p>
+  <p class="video-dialog-fallback"><a href="https://www.youtube.com/watch?v=qAPskHcYCXE" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></p>
 </dialog>
 
 <script>
@@ -655,7 +655,7 @@ body.video-dialog-open{overflow:hidden}
       event.preventDefault();
       videoDialog.showModal();
       document.body.classList.add('video-dialog-open');
-      videoFrame.src='https://www.youtube.com/embed/ZHHejoeKQ7I?autoplay=1&rel=0';
+      videoFrame.src='https://www.youtube.com/embed/qAPskHcYCXE?autoplay=1&rel=0';
     });
     videoDialog.querySelector('.video-dialog-close').addEventListener('click',function(){videoDialog.close();});
     videoDialog.addEventListener('click',function(event){
