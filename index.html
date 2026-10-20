@@ -103,6 +103,8 @@ div.proj{cursor:default}
 .proj .desc+.desc{margin-top:.75em}
 .proj .desc a,.proj .desc .proj-link{color:var(--ink);text-decoration:underline;text-underline-offset:3px;word-break:break-word}
 .proj .desc a:hover,.proj:hover .desc .proj-link{color:var(--accent)}
+.hardware-help{border:0;background:none;color:inherit;font:inherit;text-decoration:underline dotted;text-underline-offset:3px;cursor:help}
+.hardware-tooltip{position:fixed;z-index:100;width:min(26rem,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;padding:14px 16px;border:1px solid var(--line-strong);border-radius:6px;background:var(--bg);color:var(--ink);font-size:.9rem;line-height:1.55;box-shadow:0 8px 28px rgba(0,0,0,.16)}
 .proj .tags{
   display:flex;
   flex-wrap:wrap;
@@ -395,7 +397,7 @@ body.video-dialog-open{overflow:hidden}
         <div>
           <h3>CEDA</h3>
           <p class="desc">CEDA is an exploratory data analysis tool designed for the science team working on NASA's <a href="https://science.nasa.gov/mission/carruthers-geocorona-observatory/" target="_blank" rel="noopener">Carruthers Geocorona Observatory</a> mission. It is both a multi-university project that produces multiple papers and a testing ground for applying AI to science.</p>
-          <p class="desc">My technical contributions include setting up the software and hardware infrastructure; making compute-versus-memory trade-offs; developing a data pipeline that combines scattered data sources as inputs to theoretical models for comparison with observational data; and refactoring legacy IDL code into Python and TypeScript. I also distributed computation across multiple GPUs, increasing simulation speed by 300%.</p>
+          <p class="desc">My technical contributions include setting up the software and <button class="hardware-help" type="button" aria-describedby="hardware-tooltip">hardware</button> infrastructure; making compute-versus-memory trade-offs; developing a data pipeline that combines scattered data sources as inputs to theoretical models for comparison with observational data; and refactoring legacy IDL code into Python and TypeScript. I also distributed computation across multiple GPUs, increasing simulation speed by 300%.</p>
           <p class="desc">My scientific achievements so far include discovering multiple calibration errors in the data pipeline; implementing a quaternion coordinate system, which was challenging even for the science team; and visualizing the theoretical model and observational data.</p>
           <p class="desc">My current focus is on simulating computationally expensive kinetic models of the exosphere, the outermost layer of Earth's atmosphere, to upgrade an existing physics-based model published in 1963.</p>
           <div class="tags" aria-label="Tags">
@@ -616,6 +618,8 @@ body.video-dialog-open{overflow:hidden}
   </p>
 </footer>
 
+<div class="hardware-tooltip" id="hardware-tooltip" role="tooltip" hidden>A heterogeneous GPU cluster is set up using two NVIDIA DGX Spark systems and one RTX 5090 GPU, connected remotely through a virtual private network created with Tailscale. Load balancing is implemented using NVIDIA’s PAIR tool.</div>
+
 <dialog class="video-dialog" id="ceda-video-dialog" aria-labelledby="ceda-video-title">
   <div class="video-dialog-header">
     <h2 id="ceda-video-title">CEDA · Kinetic exosphere simulation</h2>
@@ -646,6 +650,43 @@ body.video-dialog-open{overflow:hidden}
   function onScroll(){header.classList.toggle('scrolled',window.scrollY>4);}
   onScroll();
   window.addEventListener('scroll',onScroll,{passive:true});
+
+  // Hardware details work with hover, keyboard focus, and touch.
+  var hardwareHelp=document.querySelector('.hardware-help');
+  var hardwareTip=document.getElementById('hardware-tooltip');
+  var hardwareTimer;
+  function positionHardwareTip(){
+    if(hardwareTip.hidden)return;
+    var anchor=hardwareHelp.getBoundingClientRect();
+    var tip=hardwareTip.getBoundingClientRect();
+    var left=Math.max(16,Math.min(anchor.left,window.innerWidth-tip.width-16));
+    var top=anchor.bottom+8;
+    if(top+tip.height>window.innerHeight-16)top=anchor.top-tip.height-8;
+    hardwareTip.style.left=left+'px';
+    hardwareTip.style.top=Math.max(16,top)+'px';
+  }
+  function showHardwareTip(){
+    clearTimeout(hardwareTimer);
+    hardwareTip.hidden=false;
+    positionHardwareTip();
+  }
+  function hideHardwareTip(){clearTimeout(hardwareTimer);hardwareTip.hidden=true;}
+  function leaveHardwareTip(){
+    if(document.activeElement!==hardwareHelp)hardwareTimer=setTimeout(hideHardwareTip,150);
+  }
+  hardwareHelp.addEventListener('mouseenter',showHardwareTip);
+  hardwareHelp.addEventListener('mouseleave',leaveHardwareTip);
+  hardwareHelp.addEventListener('focus',showHardwareTip);
+  hardwareHelp.addEventListener('blur',hideHardwareTip);
+  hardwareHelp.addEventListener('click',showHardwareTip);
+  hardwareTip.addEventListener('mouseenter',showHardwareTip);
+  hardwareTip.addEventListener('mouseleave',leaveHardwareTip);
+  document.addEventListener('keydown',function(event){if(event.key==='Escape')hideHardwareTip();});
+  document.addEventListener('pointerdown',function(event){
+    if(!hardwareHelp.contains(event.target)&&!hardwareTip.contains(event.target))hideHardwareTip();
+  });
+  window.addEventListener('scroll',hideHardwareTip,{passive:true});
+  window.addEventListener('resize',positionHardwareTip);
 
   // Load the embedded video on demand; the thumbnail remains a working YouTube link without JS.
   var videoPreview=document.getElementById('ceda-exosphere-preview');
