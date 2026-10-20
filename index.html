@@ -107,6 +107,10 @@ div.proj{cursor:default}
 .detail-tooltip{position:fixed;z-index:100;width:min(26rem,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;padding:14px 16px;border:1px solid var(--line-strong);border-radius:6px;background:var(--bg);color:var(--ink);font-size:.9rem;line-height:1.55;box-shadow:0 8px 28px rgba(0,0,0,.16)}
 .detail-tooltip ul{margin:0;padding-left:1.2em}
 .detail-tooltip li+li{margin-top:.4em}
+.model-details{width:min(38rem,calc(100vw - 32px))}
+.model-details p{margin-top:.7em}
+.model-details ul{margin-top:.4em}
+.model-details a{text-decoration:underline;text-underline-offset:2px}
 .proj .tags{
   display:flex;
   flex-wrap:wrap;
@@ -399,7 +403,21 @@ body.video-dialog-open{overflow:hidden}
         <div>
           <h3>CEDA</h3>
           <p class="desc">CEDA is an exploratory data analysis tool designed for the science team working on NASA's <a href="https://science.nasa.gov/mission/carruthers-geocorona-observatory/" target="_blank" rel="noopener">Carruthers Geocorona Observatory</a> mission. The project goal is to update the theoretical model of the Earth's exosphere. My role is to provide computational expertise and experiment with applying AI to automate the process of scientific discovery by embedding myself with the science team.</p>
-          <p class="desc">The most AI-intensive part of my research involves building an automated research pipeline in which AI tunes an unprecedentedly complex model of the exosphere to fit satellite observations and then validates it against future data.</p>
+          <p class="desc">The most AI-intensive part of my research involves building an automated research pipeline in which AI tunes a <button class="detail-help" type="button" aria-controls="model-details" aria-haspopup="dialog" aria-expanded="false">physics-based kinetic model</button> of the exosphere to fit satellite observations and then validates it against future data.</p>
+          <div class="detail-tooltip model-details" id="model-details" role="dialog" aria-labelledby="model-details-title" hidden>
+            <strong id="model-details-title">Model and related work</strong>
+            <p>Earlier exosphere models include physics-based analytical kinetic theory and numerical particle simulations, as well as empirical fits to observations.</p>
+            <p>This simulation follows hydrogen particles under Earth, Sun and Moon gravity, solar Lyman-alpha scattering and photon recoil, photoionization, and proton–hydrogen charge exchange. It includes Earth’s shadow, exobase return and lunar absorption, with measured solar inputs and a prescribed proton environment.</p>
+            <p>The current run omits hydrogen–hydrogen collisions, electron-impact ionization, ion trajectories and multiple-scattering radiative transfer.</p>
+            <p><strong>Relevant papers</strong></p>
+            <ul>
+              <li><a href="https://doi.org/10.1016/0032-0633(63)90122-3" target="_blank" rel="noopener noreferrer">Chamberlain (1963), Planetary coronae and atmospheric evaporation</a> — analytical kinetic theory.</li>
+              <li><a href="https://doi.org/10.1029/94JA02183" target="_blank" rel="noopener noreferrer">Hodges (1994), Monte Carlo simulation of the terrestrial hydrogen exosphere</a> — particle dynamics, collisions and charge exchange.</li>
+              <li><a href="https://angeo.copernicus.org/articles/33/413/2015/" target="_blank" rel="noopener noreferrer">Zoennchen et al. (2015), Terrestrial exospheric hydrogen density distributions under solar minimum and solar maximum conditions observed by the TWINS stereo mission</a> — observation-fitted density models.</li>
+              <li><a href="https://arxiv.org/abs/1502.06701" target="_blank" rel="noopener noreferrer">Beth et al. (2016), Theory for planetary exospheres: I. Radiation pressure effect on dynamical trajectories</a> — trajectories under gravity and radiation pressure.</li>
+              <li><a href="https://www.frontiersin.org/journals/astronomy-and-space-sciences/articles/10.3389/fspas.2023.1082150/full" target="_blank" rel="noopener noreferrer">Cucho-Padin et al. (2023), EXOSpy: A python package to investigate the terrestrial exosphere and its FUV emission</a> — model comparison and synthetic emission.</li>
+            </ul>
+          </div>
           <p class="desc">My technical contributions include setting up the software and <button class="detail-help" type="button" aria-describedby="hardware-tooltip">hardware</button> infrastructure; implementing <button class="detail-help" type="button" aria-describedby="security-tooltip">security standards</button> required by NASA; making compute-versus-memory trade-offs; and developing a data pipeline that combines scattered data sources as inputs to theoretical models for comparison with observational data, <button class="detail-help" type="button" aria-describedby="contributions-tooltip">among others</button>.</p>
           <p class="desc">My current focus is on simulating computationally expensive kinetic models of the exosphere, the outermost layer of Earth's atmosphere, to upgrade an existing physics-based model published in 1963.</p>
           <div class="tags" aria-label="Tags">
@@ -669,15 +687,20 @@ body.video-dialog-open{overflow:hidden}
   // Contribution details work with hover, keyboard focus, and touch.
   var hideActiveTip;
   document.querySelectorAll('.detail-help').forEach(function(help){
-    var tooltip=document.getElementById(help.getAttribute('aria-describedby'));
+    var tooltip=document.getElementById(help.getAttribute('aria-controls')||help.getAttribute('aria-describedby'));
     var timer;
     function positionTip(){
       if(tooltip.hidden)return;
       var anchor=help.getBoundingClientRect();
+      tooltip.style.maxHeight=(window.innerHeight-32)+'px';
       var tip=tooltip.getBoundingClientRect();
+      var below=window.innerHeight-anchor.bottom-24;
+      var above=anchor.top-24;
+      var useBelow=tip.height<=below||below>=above;
+      tooltip.style.maxHeight=Math.max(80,useBelow?below:above)+'px';
+      tip=tooltip.getBoundingClientRect();
       var left=Math.max(16,Math.min(anchor.left,window.innerWidth-tip.width-16));
-      var top=anchor.bottom+8;
-      if(top+tip.height>window.innerHeight-16)top=anchor.top-tip.height-8;
+      var top=useBelow?anchor.bottom+8:anchor.top-tip.height-8;
       tooltip.style.left=left+'px';
       tooltip.style.top=Math.max(16,top)+'px';
     }
@@ -685,25 +708,37 @@ body.video-dialog-open{overflow:hidden}
       if(hideActiveTip&&hideActiveTip!==hideTip)hideActiveTip();
       clearTimeout(timer);
       tooltip.hidden=false;
+      if(help.hasAttribute('aria-expanded'))help.setAttribute('aria-expanded','true');
       hideActiveTip=hideTip;
       positionTip();
     }
     function hideTip(){
       clearTimeout(timer);
       tooltip.hidden=true;
+      if(help.hasAttribute('aria-expanded'))help.setAttribute('aria-expanded','false');
       if(hideActiveTip===hideTip)hideActiveTip=null;
     }
     function leaveTip(){
-      if(document.activeElement!==help)timer=setTimeout(hideTip,150);
+      clearTimeout(timer);
+      timer=setTimeout(function(){
+        if(document.activeElement!==help&&!tooltip.contains(document.activeElement)&&!help.matches(':hover')&&!tooltip.matches(':hover'))hideTip();
+      },150);
     }
     help.addEventListener('mouseenter',showTip);
     help.addEventListener('mouseleave',leaveTip);
     help.addEventListener('focus',showTip);
-    help.addEventListener('blur',hideTip);
+    help.addEventListener('blur',leaveTip);
     help.addEventListener('click',showTip);
     tooltip.addEventListener('mouseenter',showTip);
     tooltip.addEventListener('mouseleave',leaveTip);
-    document.addEventListener('keydown',function(event){if(event.key==='Escape')hideTip();});
+    tooltip.addEventListener('focusin',showTip);
+    tooltip.addEventListener('focusout',leaveTip);
+    document.addEventListener('keydown',function(event){
+      if(event.key==='Escape'&&!tooltip.hidden){
+        if(tooltip.contains(document.activeElement))help.focus({preventScroll:true});
+        hideTip();
+      }
+    });
     document.addEventListener('pointerdown',function(event){
       if(!help.contains(event.target)&&!tooltip.contains(event.target))hideTip();
     });
